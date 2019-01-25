@@ -6,7 +6,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Path("products")
-public class ProductsResource {
+public class ProductResource {
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
