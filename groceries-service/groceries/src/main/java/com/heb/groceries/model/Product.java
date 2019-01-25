@@ -3,6 +3,8 @@ package com.heb.groceries.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Product {
 
 	private long		id;
@@ -24,6 +26,10 @@ public class Product {
 	}
 
 	public void setId(final long id) {
+		if (id <= 0) {
+			throw new IllegalArgumentException("");
+		}
+
 		this.id = id;
 	}
 
@@ -32,7 +38,15 @@ public class Product {
 	}
 
 	public void setDescription(final String description) {
-		this.description = description;
+		if (StringUtils.isBlank(description)) {
+			throw new IllegalArgumentException();
+		}
+
+		if (!StringUtils.isAlphaSpace(description)) {
+			throw new IllegalArgumentException();
+		}
+
+		this.description = StringUtils.normalizeSpace(description);
 	}
 
 	public LocalDate getLastSold() {
@@ -40,6 +54,10 @@ public class Product {
 	}
 
 	public void setLastSold(final LocalDate lastSold) {
+		if (lastSold == null) {
+			throw new IllegalArgumentException();
+		}
+
 		this.lastSold = lastSold;
 	}
 
@@ -48,6 +66,10 @@ public class Product {
 	}
 
 	public void setShelfLifeDays(final int numberOfDays) {
+		if (numberOfDays < 0) {
+			throw new IllegalArgumentException();
+		}
+
 		this.shelfLifeDays = numberOfDays;
 	}
 
@@ -56,7 +78,11 @@ public class Product {
 	}
 
 	public void setDepartment(final String department) {
-		this.department = department;
+		if (!StringUtils.isAlpha(department)) {
+			throw new IllegalArgumentException();
+		}
+
+		this.department = StringUtils.normalizeSpace(department);
 	}
 
 	public BigDecimal getPrice() {
@@ -64,6 +90,14 @@ public class Product {
 	}
 
 	public void setPrice(final BigDecimal price) {
+		if (price == null) {
+			throw new IllegalArgumentException();
+		}
+
+		if (price.compareTo(BigDecimal.ZERO) < 0) {
+			throw new IllegalArgumentException();
+		}
+
 		this.price = price;
 	}
 
@@ -72,7 +106,11 @@ public class Product {
 	}
 
 	public void setUnit(final String unit) {
-		this.unit = unit;
+		if (!StringUtils.isAlpha(unit)) {
+			throw new IllegalArgumentException();
+		}
+
+		this.unit = StringUtils.normalizeSpace(unit);
 	}
 
 	public int getXFor() {
@@ -80,6 +118,10 @@ public class Product {
 	}
 
 	public void setXFor(final int xFor) {
+		if (xFor < 0) {
+			throw new IllegalArgumentException();
+		}
+
 		this.xFor = xFor;
 	}
 
@@ -88,6 +130,14 @@ public class Product {
 	}
 
 	public void setCost(BigDecimal cost) {
+		if (cost == null) {
+			throw new IllegalArgumentException();
+		}
+
+		if (cost.compareTo(BigDecimal.ZERO) < 0) {
+			throw new IllegalArgumentException();
+		}
+
 		this.cost = cost;
 	}
 
