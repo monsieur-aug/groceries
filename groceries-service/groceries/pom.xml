@@ -65,6 +65,11 @@
 		    <version>4.12</version>
 		    <scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.test-framework.providers/jersey-test-framework-provider-jdk-http -->
+		<dependency>
+		    <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+		    <artifactId>jersey-test-framework-provider-jdk-http</artifactId>
+		</dependency>
     </dependencies>
     <properties>
         <jersey.version>2.27</jersey.version>
