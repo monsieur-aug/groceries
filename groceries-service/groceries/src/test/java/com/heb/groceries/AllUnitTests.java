@@ -6,7 +6,8 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	com.heb.groceries.model.ProductTest.class
+	com.heb.groceries.model.ProductTest.class,
+	com.heb.groceries.model.ProductBuilderTest.class
 })
 public class AllUnitTests {
 
