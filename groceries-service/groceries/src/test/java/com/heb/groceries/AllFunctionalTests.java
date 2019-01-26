@@ -6,9 +6,8 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	com.heb.groceries.AllUnitTests.class,
-	com.heb.groceries.AllFunctionalTests.class
+	com.heb.groceries.resource.ProductResourceFunctionalTest.class
 })
-public class AllTests {
+public class AllFunctionalTests {
 
 }
