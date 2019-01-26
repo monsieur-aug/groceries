@@ -1,6 +1,7 @@
 package com.heb.groceries.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,27 +31,17 @@ public class ProductTest {
 
 	@Test
 	public void testProductZeroParameters() {
-		final Long expectedId = null;
-		final String expectedDescription = null;
-		final LocalDate expectedLastSold = null;
-		final Integer expectedShelfLifeDays = null;
-		final String expectedDepartment = null;
-		final BigDecimal expectedPrice = null;
-		final String expectedUnit = null;
-		final Integer expectedXFor = null;
-		final BigDecimal expectedCost = null;
-
 		final Product testProduct = new Product();
 
-		assertEquals("The id should be initialized to the default value", expectedId, testProduct.getId());
-		assertEquals("The description should be initialized to the default value", expectedDescription, testProduct.getDescription());
-		assertEquals("The last sold date should be initialized to the default value", expectedLastSold, testProduct.getLastSold());
-		assertEquals("The shelf life days should be initialized to the default value", expectedShelfLifeDays, testProduct.getShelfLifeDays());
-		assertEquals("The department should be initialized to the default value", expectedDepartment, testProduct.getDepartment());
-		assertEquals("The price should be initialized to the default value", expectedPrice, testProduct.getPrice());
-		assertEquals("The unit should be initialized to the default value", expectedUnit, testProduct.getUnit());
-		assertEquals("The xFor should be initialized to the default value", expectedXFor, testProduct.getXFor());
-		assertEquals("The cost should be initialized to the default value", expectedCost, testProduct.getCost());
+		assertNull("The id should be initialized to the default value", testProduct.getId());
+		assertNull("The description should be initialized to the default value", testProduct.getDescription());
+		assertNull("The last sold date should be initialized to the default value", testProduct.getLastSold());
+		assertNull("The shelf life days should be initialized to the default value", testProduct.getShelfLifeDays());
+		assertNull("The department should be initialized to the default value", testProduct.getDepartment());
+		assertNull("The price should be initialized to the default value", testProduct.getPrice());
+		assertNull("The unit should be initialized to the default value", testProduct.getUnit());
+		assertNull("The xFor should be initialized to the default value", testProduct.getXFor());
+		assertNull("The cost should be initialized to the default value", testProduct.getCost());
 	}
 
 	@Test
