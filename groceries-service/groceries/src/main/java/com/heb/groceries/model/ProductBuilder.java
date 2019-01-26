@@ -64,7 +64,7 @@ public class ProductBuilder {
 		return this;
 	}
 
-	public ProductBuilder xFor(final int xFor) {
+	public ProductBuilder xFor(final Integer xFor) {
 		this.product.setXFor(xFor);
 
 		return this;

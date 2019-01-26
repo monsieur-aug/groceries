@@ -16,7 +16,7 @@ public class Product {
 	private String		department;
 	private BigDecimal	price;
 	private String		unit;
-	private int			xFor;
+	private Integer		xFor;
 	private BigDecimal	cost;
 
 	public Product() {
@@ -75,7 +75,7 @@ public class Product {
 		if (numberOfDays == null) {
 			throw new IllegalArgumentException(Error.PRODUCT_SHELF_LIFE_NULL.toString());
 		}
-		
+
 		if (numberOfDays <= 0) {
 			throw new IllegalArgumentException(Error.PRODUCT_SHELF_LIFE_NEGATIVE_OR_ZERO.toString());
 		}
@@ -131,11 +131,15 @@ public class Product {
 		this.unit = StringUtils.normalizeSpace(unit);
 	}
 
-	public int getXFor() {
+	public Integer getXFor() {
 		return this.xFor;
 	}
 
-	public void setXFor(final int xFor) {
+	public void setXFor(final Integer xFor) {
+		if (xFor == null) {
+			throw new IllegalArgumentException(Error.PRODUCT_XFOR_NULL.toString());
+		}
+
 		if (xFor <= 0) {
 			throw new IllegalArgumentException(Error.PRODUCT_XFOR_NEGATIVE_OR_ZERO.toString());
 		}

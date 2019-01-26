@@ -22,7 +22,7 @@ public class ProductTest {
 	private final String		validDepartment		= "Produce";
 	private final BigDecimal	validPrice			= new BigDecimal("5.99");
 	private final String		validUnit			= "Each";
-	private final int			validXFor			= 1;
+	private final Integer		validXFor			= new Integer(1);
 	private final BigDecimal	validCost			= new BigDecimal("1.20");
 
 	@Rule
@@ -37,7 +37,7 @@ public class ProductTest {
 		final String expectedDepartment = null;
 		final BigDecimal expectedPrice = null;
 		final String expectedUnit = null;
-		final int expectedXFor = 0;
+		final Integer expectedXFor = null;
 		final BigDecimal expectedCost = null;
 
 		final Product testProduct = new Product();
@@ -328,11 +328,21 @@ public class ProductTest {
 	}
 
 	@Test
+	public void testSetXForThrowsIllegalArgumentExceptionGivenNullXFor() {
+		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expectMessage(Error.PRODUCT_XFOR_NULL.toString());
+
+		final Integer nullXFor = null;
+		final Product testProduct = new Product();
+		testProduct.setXFor(nullXFor);
+	}
+
+	@Test
 	public void testSetXForThrowsIllegalArgumentExceptionGivenNegativeXFor() {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_XFOR_NEGATIVE_OR_ZERO.toString());
 
-		final int negativeXFor = -1;
+		final Integer negativeXFor = new Integer(-1);
 		final Product testProduct = new Product();
 		testProduct.setXFor(negativeXFor);
 	}
@@ -342,7 +352,7 @@ public class ProductTest {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_XFOR_NEGATIVE_OR_ZERO.toString());
 
-		final int zeroedXFor = 0;
+		final Integer zeroedXFor = new Integer(0);
 		final Product testProduct = new Product();
 		testProduct.setXFor(zeroedXFor);
 	}

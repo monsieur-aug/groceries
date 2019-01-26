@@ -20,7 +20,7 @@ public class ProductBuilderTest {
 	private final String		validDepartment		= "Produce";
 	private final BigDecimal	validPrice			= new BigDecimal("5.99");
 	private final String		validUnit			= "Each";
-	private final int			validXFor			= 1;
+	private final Integer		validXFor			= new Integer(1);
 	private final BigDecimal	validCost			= new BigDecimal("1.20");
 
 	@Rule
