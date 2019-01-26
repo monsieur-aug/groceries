@@ -1,6 +1,7 @@
 package com.heb.groceries.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
@@ -374,6 +375,39 @@ public class ProductTest {
 		final BigDecimal negativeCost = new BigDecimal("-2.50");
 		final Product testProduct = new Product();
 		testProduct.setCost(negativeCost);
+	}
+
+	@Test
+	public void testEqualsReturnsTrueGivenEquivalentProduct() {
+		final Product aProduct = createValidProduct();
+		final Product anEquivalentProduct = createValidProduct();
+
+		assertEquals("The products should be considered equal", aProduct, anEquivalentProduct);
+	}
+
+	@Test
+	public void testEqualsReturnsFalseGivenProductWithDifferentId() {
+		final Product aProduct = createValidProduct();
+		final Product aProductWithDifferentId = createValidProduct();
+		aProductWithDifferentId.setId(aProduct.getId() + 1L);
+
+		assertNotEquals("The products should not be considered equal", aProduct, aProductWithDifferentId);
+	}
+
+	private Product createValidProduct() {
+		final Product validProduct = new Product();
+
+		validProduct.setId(this.validId);
+		validProduct.setDescription(this.validDescription);
+		validProduct.setLastSold(this.validLastSold);
+		validProduct.setShelfLifeDays(this.validShelfLifeDays);
+		validProduct.setDepartment(this.validDepartment);
+		validProduct.setPrice(this.validPrice);
+		validProduct.setUnit(this.validUnit);
+		validProduct.setXFor(this.validXFor);
+		validProduct.setCost(this.validCost);
+
+		return validProduct;
 	}
 
 }
