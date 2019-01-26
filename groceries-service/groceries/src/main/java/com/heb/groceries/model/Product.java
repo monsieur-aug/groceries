@@ -32,7 +32,7 @@ public class Product {
 			throw new IllegalArgumentException(Error.PRODUCT_ID_NULL.toString());
 		}
 
-		if (id.compareTo(0L) <= 0) {
+		if (id <= 0L) {
 			throw new IllegalArgumentException(Error.PRODUCT_ID_NEGATIVE_OR_ZERO.toString());
 		}
 
