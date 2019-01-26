@@ -128,8 +128,8 @@ public class Product {
 	}
 
 	public void setXFor(final int xFor) {
-		if (xFor < 0) {
-			throw new IllegalArgumentException(Error.PRODUCT_XFOR_NEGATIVE.toString());
+		if (xFor <= 0) {
+			throw new IllegalArgumentException(Error.PRODUCT_XFOR_NEGATIVE_OR_ZERO.toString());
 		}
 
 		this.xFor = xFor;

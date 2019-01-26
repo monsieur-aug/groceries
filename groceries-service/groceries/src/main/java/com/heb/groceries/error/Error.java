@@ -12,7 +12,7 @@ public enum Error {
 	PRODUCT_PRICE_NEGATIVE("The product price may not be negative."),
 	PRODUCT_UNIT_NULL_BLANK_EMPTY("The product unit may not be null, blank, or empty."),
 	PRODUCT_UNIT_NOT_ALPHA_SPACE("The product unit may only contain letters and spaces."),
-	PRODUCT_XFOR_NEGATIVE("The product xFor must be a non-negative number of units."),
+	PRODUCT_XFOR_NEGATIVE_OR_ZERO("The product xFor must be greater than zero."),
 	PRODUCT_COST_NULL("The product cost may not be null."),
 	PRODUCT_COST_NEGATIVE("The product cost may not be negative."),
 	PRODUCT_BUILDER_INCOMPLETE("The product builder requires the product id, description, last sold date, shelf life in days, department, price, unit, xFor, and cost."),

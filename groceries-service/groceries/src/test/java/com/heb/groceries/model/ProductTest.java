@@ -88,7 +88,7 @@ public class ProductTest {
 
 		assertEquals("The description should be the same as the one specified by the setter", this.validDescription, testProduct.getDescription());
 	}
-	
+
 	@Test
 	public void testSetDescriptionThrowsIllegalArgumentExceptionGivenNullDescription() {
 		expectedException.expect(IllegalArgumentException.class);
@@ -310,11 +310,21 @@ public class ProductTest {
 	@Test
 	public void testSetXForThrowsIllegalArgumentExceptionGivenNegativeXFor() {
 		expectedException.expect(IllegalArgumentException.class);
-		expectedException.expectMessage(Error.PRODUCT_XFOR_NEGATIVE.toString());
+		expectedException.expectMessage(Error.PRODUCT_XFOR_NEGATIVE_OR_ZERO.toString());
 
 		final int negativeXFor = -1;
 		final Product testProduct = new Product();
 		testProduct.setXFor(negativeXFor);
+	}
+
+	@Test
+	public void testSetXForThrowsIllegalArgumentExceptionGivenZeroedXFor() {
+		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expectMessage(Error.PRODUCT_XFOR_NEGATIVE_OR_ZERO.toString());
+
+		final int zeroedXFor = 0;
+		final Product testProduct = new Product();
+		testProduct.setXFor(zeroedXFor);
 	}
 
 	@Test
