@@ -19,6 +19,7 @@ public enum Error {
 	PRODUCT_COST_NULL("The product cost may not be null."),
 	PRODUCT_COST_NEGATIVE("The product cost may not be negative."),
 	PRODUCT_BUILDER_INCOMPLETE("The product builder requires the following values to be set: product id, description, last sold date, shelf life in days, department, price, unit, xFor, and cost."),
+	PRODUCT_SERVICE_NULL("The product service may not be null."),
 	;
 
 	private final String message;
