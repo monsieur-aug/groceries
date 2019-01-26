@@ -22,7 +22,7 @@ public class ProductBuilder {
 		throw new IllegalStateException(Error.PRODUCT_BUILDER_INCOMPLETE.toString());
 	}
 
-	public ProductBuilder id(final long id) {
+	public ProductBuilder id(final Long id) {
 		this.product.setId(id);
 
 		return this;
@@ -40,7 +40,7 @@ public class ProductBuilder {
 		return this;
 	}
 
-	public ProductBuilder shelfLifeDays(final int numberOfDays) {
+	public ProductBuilder shelfLifeDays(final Integer numberOfDays) {
 		this.product.setShelfLifeDays(numberOfDays);
 
 		return this;
@@ -64,7 +64,7 @@ public class ProductBuilder {
 		return this;
 	}
 
-	public ProductBuilder xFor(final int xFor) {
+	public ProductBuilder xFor(final Integer xFor) {
 		this.product.setXFor(xFor);
 
 		return this;

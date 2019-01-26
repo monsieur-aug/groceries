@@ -13,14 +13,14 @@ import com.heb.groceries.error.Error;
 
 public class ProductBuilderTest {
 
-	private final long			validId				= 1L;
+	private final Long			validId				= new Long(1L);
 	private final String		validDescription	= "Tasty Cakes";
 	private final LocalDate		validLastSold		= LocalDate.of(1970, 1, 1);
-	private final int			validShelfLifeDays	= 30;
+	private final Integer		validShelfLifeDays	= new Integer(30);
 	private final String		validDepartment		= "Produce";
 	private final BigDecimal	validPrice			= new BigDecimal("5.99");
 	private final String		validUnit			= "Each";
-	private final int			validXFor			= 1;
+	private final Integer		validXFor			= new Integer(1);
 	private final BigDecimal	validCost			= new BigDecimal("1.20");
 
 	@Rule

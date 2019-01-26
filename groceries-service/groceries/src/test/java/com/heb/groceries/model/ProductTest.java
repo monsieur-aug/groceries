@@ -1,6 +1,7 @@
 package com.heb.groceries.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,14 +16,14 @@ import com.heb.groceries.model.Product;
 
 public class ProductTest {
 
-	private final long			validId				= 1L;
+	private final Long			validId				= new Long(1L);
 	private final String		validDescription	= "Tasty Cakes";
 	private final LocalDate		validLastSold		= LocalDate.of(1970, 1, 1);
-	private final int			validShelfLifeDays	= 30;
+	private final Integer		validShelfLifeDays	= new Integer(30);
 	private final String		validDepartment		= "Produce";
 	private final BigDecimal	validPrice			= new BigDecimal("5.99");
 	private final String		validUnit			= "Each";
-	private final int			validXFor			= 1;
+	private final Integer		validXFor			= new Integer(1);
 	private final BigDecimal	validCost			= new BigDecimal("1.20");
 
 	@Rule
@@ -30,27 +31,17 @@ public class ProductTest {
 
 	@Test
 	public void testProductZeroParameters() {
-		final long expectedId = 0L;
-		final String expectedDescription = null;
-		final LocalDate expectedLastSold = null;
-		final int expectedShelfLifeDays = 0;
-		final String expectedDepartment = null;
-		final BigDecimal expectedPrice = null;
-		final String expectedUnit = null;
-		final int expectedXFor = 0;
-		final BigDecimal expectedCost = null;
-
 		final Product testProduct = new Product();
 
-		assertEquals("The id should be initialized to the default value", expectedId, testProduct.getId());
-		assertEquals("The description should be initialized to the default value", expectedDescription, testProduct.getDescription());
-		assertEquals("The last sold date should be initialized to the default value", expectedLastSold, testProduct.getLastSold());
-		assertEquals("The shelf life days should be initialized to the default value", expectedShelfLifeDays, testProduct.getShelfLifeDays());
-		assertEquals("The department should be initialized to the default value", expectedDepartment, testProduct.getDepartment());
-		assertEquals("The price should be initialized to the default value", expectedPrice, testProduct.getPrice());
-		assertEquals("The unit should be initialized to the default value", expectedUnit, testProduct.getUnit());
-		assertEquals("The xFor should be initialized to the default value", expectedXFor, testProduct.getXFor());
-		assertEquals("The cost should be initialized to the default value", expectedCost, testProduct.getCost());
+		assertNull("The id should be initialized to the default value", testProduct.getId());
+		assertNull("The description should be initialized to the default value", testProduct.getDescription());
+		assertNull("The last sold date should be initialized to the default value", testProduct.getLastSold());
+		assertNull("The shelf life days should be initialized to the default value", testProduct.getShelfLifeDays());
+		assertNull("The department should be initialized to the default value", testProduct.getDepartment());
+		assertNull("The price should be initialized to the default value", testProduct.getPrice());
+		assertNull("The unit should be initialized to the default value", testProduct.getUnit());
+		assertNull("The xFor should be initialized to the default value", testProduct.getXFor());
+		assertNull("The cost should be initialized to the default value", testProduct.getCost());
 	}
 
 	@Test
@@ -62,11 +53,21 @@ public class ProductTest {
 	}
 
 	@Test
+	public void testSetIdThrowsIllegalArgumentExceptionGivenNullId() {
+		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expectMessage(Error.PRODUCT_ID_NULL.toString());
+
+		final Long nullId = null;
+		final Product testProduct = new Product();
+		testProduct.setId(nullId);
+	}
+
+	@Test
 	public void testSetIdThrowsIllegalArgumentExceptionGivenNegativeId() {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_ID_NEGATIVE_OR_ZERO.toString());
 
-		final long negativeId = -1L;
+		final Long negativeId = new Long(-1L);
 		final Product testProduct = new Product();
 		testProduct.setId(negativeId);
 	}
@@ -76,7 +77,7 @@ public class ProductTest {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_ID_NEGATIVE_OR_ZERO.toString());
 
-		final long zeroedId = 0L;
+		final Long zeroedId = new Long(0L);
 		final Product testProduct = new Product();
 		testProduct.setId(zeroedId);
 	}
@@ -156,11 +157,21 @@ public class ProductTest {
 	}
 
 	@Test
+	public void testSetShelfLifeDaysThrowsIllegalArgumentExceptionGivenNullNumberOfDays() {
+		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expectMessage(Error.PRODUCT_SHELF_LIFE_NULL.toString());
+
+		final Integer nullShelfLifeDays = null;
+		final Product testProduct = new Product();
+		testProduct.setShelfLifeDays(nullShelfLifeDays);
+	}
+
+	@Test
 	public void testSetShelfLifeDaysThrowsIllegalArgumentExceptionGivenNegativeNumberOfDays() {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_SHELF_LIFE_NEGATIVE_OR_ZERO.toString());
 
-		final int negativeShelfLifeDays = -1;
+		final Integer negativeShelfLifeDays = new Integer(-1);
 		final Product testProduct = new Product();
 		testProduct.setShelfLifeDays(negativeShelfLifeDays);
 	}
@@ -170,7 +181,7 @@ public class ProductTest {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_SHELF_LIFE_NEGATIVE_OR_ZERO.toString());
 
-		final int zeroedShelfLifeDays = 0;
+		final Integer zeroedShelfLifeDays = new Integer(0);
 		final Product testProduct = new Product();
 		testProduct.setShelfLifeDays(zeroedShelfLifeDays);
 	}
@@ -308,11 +319,21 @@ public class ProductTest {
 	}
 
 	@Test
+	public void testSetXForThrowsIllegalArgumentExceptionGivenNullXFor() {
+		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expectMessage(Error.PRODUCT_XFOR_NULL.toString());
+
+		final Integer nullXFor = null;
+		final Product testProduct = new Product();
+		testProduct.setXFor(nullXFor);
+	}
+
+	@Test
 	public void testSetXForThrowsIllegalArgumentExceptionGivenNegativeXFor() {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_XFOR_NEGATIVE_OR_ZERO.toString());
 
-		final int negativeXFor = -1;
+		final Integer negativeXFor = new Integer(-1);
 		final Product testProduct = new Product();
 		testProduct.setXFor(negativeXFor);
 	}
@@ -322,7 +343,7 @@ public class ProductTest {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_XFOR_NEGATIVE_OR_ZERO.toString());
 
-		final int zeroedXFor = 0;
+		final Integer zeroedXFor = new Integer(0);
 		final Product testProduct = new Product();
 		testProduct.setXFor(zeroedXFor);
 	}

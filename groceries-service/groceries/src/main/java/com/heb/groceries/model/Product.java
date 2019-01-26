@@ -9,26 +9,30 @@ import com.heb.groceries.error.Error;
 
 public class Product {
 
-	private long		id;
+	private Long		id;
 	private String		description;
 	private LocalDate	lastSold;
-	private int			shelfLifeDays;
+	private Integer		shelfLifeDays;
 	private String		department;
 	private BigDecimal	price;
 	private String		unit;
-	private int			xFor;
+	private Integer		xFor;
 	private BigDecimal	cost;
 
 	public Product() {
 
 	}
 
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(final long id) {
-		if (id <= 0) {
+	public void setId(final Long id) {
+		if (id == null) {
+			throw new IllegalArgumentException(Error.PRODUCT_ID_NULL.toString());
+		}
+
+		if (id <= 0L) {
 			throw new IllegalArgumentException(Error.PRODUCT_ID_NEGATIVE_OR_ZERO.toString());
 		}
 
@@ -63,11 +67,15 @@ public class Product {
 		this.lastSold = lastSold;
 	}
 
-	public int getShelfLifeDays() {
+	public Integer getShelfLifeDays() {
 		return this.shelfLifeDays;
 	}
 
-	public void setShelfLifeDays(final int numberOfDays) {
+	public void setShelfLifeDays(final Integer numberOfDays) {
+		if (numberOfDays == null) {
+			throw new IllegalArgumentException(Error.PRODUCT_SHELF_LIFE_NULL.toString());
+		}
+
 		if (numberOfDays <= 0) {
 			throw new IllegalArgumentException(Error.PRODUCT_SHELF_LIFE_NEGATIVE_OR_ZERO.toString());
 		}
@@ -123,11 +131,15 @@ public class Product {
 		this.unit = StringUtils.normalizeSpace(unit);
 	}
 
-	public int getXFor() {
+	public Integer getXFor() {
 		return this.xFor;
 	}
 
-	public void setXFor(final int xFor) {
+	public void setXFor(final Integer xFor) {
+		if (xFor == null) {
+			throw new IllegalArgumentException(Error.PRODUCT_XFOR_NULL.toString());
+		}
+
 		if (xFor <= 0) {
 			throw new IllegalArgumentException(Error.PRODUCT_XFOR_NEGATIVE_OR_ZERO.toString());
 		}
