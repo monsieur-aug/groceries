@@ -158,11 +158,21 @@ public class ProductTest {
 	@Test
 	public void testSetShelfLifeDaysThrowsIllegalArgumentExceptionGivenNegativeNumberOfDays() {
 		expectedException.expect(IllegalArgumentException.class);
-		expectedException.expectMessage(Error.PRODUCT_SHELF_LIFE_NEGATIVE.toString());
+		expectedException.expectMessage(Error.PRODUCT_SHELF_LIFE_NEGATIVE_OR_ZERO.toString());
 
 		final int negativeShelfLifeDays = -1;
 		final Product testProduct = new Product();
 		testProduct.setShelfLifeDays(negativeShelfLifeDays);
+	}
+
+	@Test
+	public void testSetShelfLifeDaysThrowsIllegalArgumentExceptionGivenZeroedNumberOfDays() {
+		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expectMessage(Error.PRODUCT_SHELF_LIFE_NEGATIVE_OR_ZERO.toString());
+
+		final int zeroedShelfLifeDays = 0;
+		final Product testProduct = new Product();
+		testProduct.setShelfLifeDays(zeroedShelfLifeDays);
 	}
 
 	@Test

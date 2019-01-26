@@ -68,8 +68,8 @@ public class Product {
 	}
 
 	public void setShelfLifeDays(final int numberOfDays) {
-		if (numberOfDays < 0) {
-			throw new IllegalArgumentException(Error.PRODUCT_SHELF_LIFE_NEGATIVE.toString());
+		if (numberOfDays <= 0) {
+			throw new IllegalArgumentException(Error.PRODUCT_SHELF_LIFE_NEGATIVE_OR_ZERO.toString());
 		}
 
 		this.shelfLifeDays = numberOfDays;
