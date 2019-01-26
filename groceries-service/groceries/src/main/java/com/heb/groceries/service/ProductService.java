@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.heb.groceries.exception.ClientInputInvalidException;
 import com.heb.groceries.model.Product;
 import com.heb.groceries.model.ProductBuilder;
 
@@ -61,6 +62,8 @@ public class ProductService {
 		final List<Product> allProducts = this.getAllProducts();
 		Product retrievedProduct = null;
 
+		throwClientInputInvalidExceptionIfInvalidId(id);
+		
 		for (final Product product : allProducts) {
 			if (product.getId() == id) {
 				retrievedProduct = product;
@@ -68,6 +71,15 @@ public class ProductService {
 		}
 
 		return retrievedProduct;
+	}
+
+	private void throwClientInputInvalidExceptionIfInvalidId(final long id) {
+		try {
+			final Product idValidationProduct = new Product();
+			idValidationProduct.setId(id);
+		} catch (IllegalArgumentException iae) {
+			throw new ClientInputInvalidException(iae.getMessage());
+		}
 	}
 
 }
