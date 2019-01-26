@@ -394,6 +394,29 @@ public class ProductTest {
 		assertNotEquals("The products should not be considered equal", aProduct, aProductWithDifferentId);
 	}
 
+	@Test
+	public void testHashCodesAreTheSameForEquivalentProducts() {
+		final Product aProduct = createValidProduct();
+		final Product anEquivalentProduct = createValidProduct();
+
+		final int aProductHashCode = aProduct.hashCode();
+		final int anEquivalentProductHashCode = anEquivalentProduct.hashCode();
+
+		assertEquals("The hash codes should be the same for equivalent products", aProductHashCode, anEquivalentProductHashCode);
+	}
+
+	@Test
+	public void testHashCodesAreDifferentForDifferentProducts() {
+		final Product aProduct = createValidProduct();
+		final Product aProductWithDifferentId = createValidProduct();
+		aProductWithDifferentId.setId(aProduct.getId() + 1L);
+
+		final int aProductHashCode = aProduct.hashCode();
+		final int aProductWithDifferentIdHashCode = aProductWithDifferentId.hashCode();
+
+		assertNotEquals("The hash codes should be different for different products", aProductHashCode, aProductWithDifferentIdHashCode);
+	}
+
 	private Product createValidProduct() {
 		final Product validProduct = new Product();
 
