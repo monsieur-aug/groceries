@@ -40,7 +40,7 @@ public class ProductBuilder {
 		return this;
 	}
 
-	public ProductBuilder shelfLifeDays(final int numberOfDays) {
+	public ProductBuilder shelfLifeDays(final Integer numberOfDays) {
 		this.product.setShelfLifeDays(numberOfDays);
 
 		return this;

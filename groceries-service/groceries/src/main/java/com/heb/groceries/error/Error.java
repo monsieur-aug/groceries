@@ -6,6 +6,7 @@ public enum Error {
 	PRODUCT_DESCRIPTION_NULL_BLANK_EMPTY("The product description may not be null, blank, or empty."),
 	PRODUCT_DESCRIPTION_NOT_ALPHA_SPACE("The product description may only contain letters and spaces."),
 	PRODUCT_LAST_SOLD_DATE_NULL("The last sold date may not be null."),
+	PRODUCT_SHELF_LIFE_NULL("The shelf life may not be null."),
 	PRODUCT_SHELF_LIFE_NEGATIVE_OR_ZERO("The shelf life must be greater than zero."),
 	PRODUCT_DEPARTMENT_NULL_BLANK_EMPTY("The product department may not be null, blank, or empty."),
 	PRODUCT_DEPARTMENT_NOT_ALPHA_SPACE("The product department may only contain letters and spaces."),

@@ -12,7 +12,7 @@ public class Product {
 	private Long		id;
 	private String		description;
 	private LocalDate	lastSold;
-	private int			shelfLifeDays;
+	private Integer		shelfLifeDays;
 	private String		department;
 	private BigDecimal	price;
 	private String		unit;
@@ -31,7 +31,7 @@ public class Product {
 		if (id == null) {
 			throw new IllegalArgumentException(Error.PRODUCT_ID_NULL.toString());
 		}
-		
+
 		if (id.compareTo(0L) <= 0) {
 			throw new IllegalArgumentException(Error.PRODUCT_ID_NEGATIVE_OR_ZERO.toString());
 		}
@@ -67,11 +67,15 @@ public class Product {
 		this.lastSold = lastSold;
 	}
 
-	public int getShelfLifeDays() {
+	public Integer getShelfLifeDays() {
 		return this.shelfLifeDays;
 	}
 
-	public void setShelfLifeDays(final int numberOfDays) {
+	public void setShelfLifeDays(final Integer numberOfDays) {
+		if (numberOfDays == null) {
+			throw new IllegalArgumentException(Error.PRODUCT_SHELF_LIFE_NULL.toString());
+		}
+		
 		if (numberOfDays <= 0) {
 			throw new IllegalArgumentException(Error.PRODUCT_SHELF_LIFE_NEGATIVE_OR_ZERO.toString());
 		}

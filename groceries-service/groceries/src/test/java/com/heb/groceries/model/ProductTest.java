@@ -18,7 +18,7 @@ public class ProductTest {
 	private final Long			validId				= new Long(1L);
 	private final String		validDescription	= "Tasty Cakes";
 	private final LocalDate		validLastSold		= LocalDate.of(1970, 1, 1);
-	private final int			validShelfLifeDays	= 30;
+	private final Integer		validShelfLifeDays	= new Integer(30);
 	private final String		validDepartment		= "Produce";
 	private final BigDecimal	validPrice			= new BigDecimal("5.99");
 	private final String		validUnit			= "Each";
@@ -33,7 +33,7 @@ public class ProductTest {
 		final Long expectedId = null;
 		final String expectedDescription = null;
 		final LocalDate expectedLastSold = null;
-		final int expectedShelfLifeDays = 0;
+		final Integer expectedShelfLifeDays = null;
 		final String expectedDepartment = null;
 		final BigDecimal expectedPrice = null;
 		final String expectedUnit = null;
@@ -166,11 +166,21 @@ public class ProductTest {
 	}
 
 	@Test
+	public void testSetShelfLifeDaysThrowsIllegalArgumentExceptionGivenNullNumberOfDays() {
+		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expectMessage(Error.PRODUCT_SHELF_LIFE_NULL.toString());
+
+		final Integer nullShelfLifeDays = null;
+		final Product testProduct = new Product();
+		testProduct.setShelfLifeDays(nullShelfLifeDays);
+	}
+
+	@Test
 	public void testSetShelfLifeDaysThrowsIllegalArgumentExceptionGivenNegativeNumberOfDays() {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_SHELF_LIFE_NEGATIVE_OR_ZERO.toString());
 
-		final int negativeShelfLifeDays = -1;
+		final Integer negativeShelfLifeDays = new Integer(-1);
 		final Product testProduct = new Product();
 		testProduct.setShelfLifeDays(negativeShelfLifeDays);
 	}
@@ -180,7 +190,7 @@ public class ProductTest {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_SHELF_LIFE_NEGATIVE_OR_ZERO.toString());
 
-		final int zeroedShelfLifeDays = 0;
+		final Integer zeroedShelfLifeDays = new Integer(0);
 		final Product testProduct = new Product();
 		testProduct.setShelfLifeDays(zeroedShelfLifeDays);
 	}

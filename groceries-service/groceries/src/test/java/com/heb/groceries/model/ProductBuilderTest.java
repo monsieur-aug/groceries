@@ -16,7 +16,7 @@ public class ProductBuilderTest {
 	private final Long			validId				= new Long(1L);
 	private final String		validDescription	= "Tasty Cakes";
 	private final LocalDate		validLastSold		= LocalDate.of(1970, 1, 1);
-	private final int			validShelfLifeDays	= 30;
+	private final Integer		validShelfLifeDays	= new Integer(30);
 	private final String		validDepartment		= "Produce";
 	private final BigDecimal	validPrice			= new BigDecimal("5.99");
 	private final String		validUnit			= "Each";
