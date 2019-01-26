@@ -2,6 +2,7 @@ package com.heb.groceries.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -183,6 +184,13 @@ public class Product {
 						&& shelfLifeDays.equals(otherProduct.shelfLifeDays) && department.contentEquals(otherProduct.department)
 						&& price.equals(otherProduct.price) && unit.equals(otherProduct.unit) && xFor.equals(otherProduct.xFor)
 						&& cost.equals(otherProduct.cost);
+	}
+
+	@Override
+	public int hashCode() {
+		return 7 * Long.hashCode(id) + 11 * Objects.hashCode(description) + 13 * Objects.hashCode(lastSold) + 17 * Integer.hashCode(shelfLifeDays)
+						+ 19 * Objects.hashCode(department) + 23 * Objects.hashCode(price) + 29 * Objects.hashCode(unit) + 31 * Integer.hashCode(xFor)
+						+ 37 *Objects.hashCode(cost);
 	}
 
 }
