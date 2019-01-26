@@ -1,6 +1,7 @@
 package com.heb.groceries.error;
 
 public enum Error {
+	PRODUCT_ID_NULL("The product ID may not be null."),
 	PRODUCT_ID_NEGATIVE_OR_ZERO("The product ID must be greater than zero."),
 	PRODUCT_DESCRIPTION_NULL_BLANK_EMPTY("The product description may not be null, blank, or empty."),
 	PRODUCT_DESCRIPTION_NOT_ALPHA_SPACE("The product description may only contain letters and spaces."),
@@ -15,7 +16,7 @@ public enum Error {
 	PRODUCT_XFOR_NEGATIVE_OR_ZERO("The product xFor must be greater than zero."),
 	PRODUCT_COST_NULL("The product cost may not be null."),
 	PRODUCT_COST_NEGATIVE("The product cost may not be negative."),
-	PRODUCT_BUILDER_INCOMPLETE("The product builder requires the product id, description, last sold date, shelf life in days, department, price, unit, xFor, and cost."),
+	PRODUCT_BUILDER_INCOMPLETE("The product builder requires the following values to be set: product id, description, last sold date, shelf life in days, department, price, unit, xFor, and cost."),
 	;
 
 	private final String message;

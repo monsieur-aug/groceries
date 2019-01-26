@@ -9,7 +9,7 @@ import com.heb.groceries.error.Error;
 
 public class Product {
 
-	private long		id;
+	private Long		id;
 	private String		description;
 	private LocalDate	lastSold;
 	private int			shelfLifeDays;
@@ -23,12 +23,16 @@ public class Product {
 
 	}
 
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(final long id) {
-		if (id <= 0) {
+	public void setId(final Long id) {
+		if (id == null) {
+			throw new IllegalArgumentException(Error.PRODUCT_ID_NULL.toString());
+		}
+		
+		if (id.compareTo(0L) <= 0) {
 			throw new IllegalArgumentException(Error.PRODUCT_ID_NEGATIVE_OR_ZERO.toString());
 		}
 

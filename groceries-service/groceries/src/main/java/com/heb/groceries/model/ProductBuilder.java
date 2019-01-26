@@ -22,7 +22,7 @@ public class ProductBuilder {
 		throw new IllegalStateException(Error.PRODUCT_BUILDER_INCOMPLETE.toString());
 	}
 
-	public ProductBuilder id(final long id) {
+	public ProductBuilder id(final Long id) {
 		this.product.setId(id);
 
 		return this;

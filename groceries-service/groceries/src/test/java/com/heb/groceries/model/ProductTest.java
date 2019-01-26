@@ -15,7 +15,7 @@ import com.heb.groceries.model.Product;
 
 public class ProductTest {
 
-	private final long			validId				= 1L;
+	private final Long			validId				= new Long(1L);
 	private final String		validDescription	= "Tasty Cakes";
 	private final LocalDate		validLastSold		= LocalDate.of(1970, 1, 1);
 	private final int			validShelfLifeDays	= 30;
@@ -30,7 +30,7 @@ public class ProductTest {
 
 	@Test
 	public void testProductZeroParameters() {
-		final long expectedId = 0L;
+		final Long expectedId = null;
 		final String expectedDescription = null;
 		final LocalDate expectedLastSold = null;
 		final int expectedShelfLifeDays = 0;
@@ -62,11 +62,21 @@ public class ProductTest {
 	}
 
 	@Test
+	public void testSetIdThrowsIllegalArgumentExceptionGivenNullId() {
+		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expectMessage(Error.PRODUCT_ID_NULL.toString());
+
+		final Long nullId = null;
+		final Product testProduct = new Product();
+		testProduct.setId(nullId);
+	}
+
+	@Test
 	public void testSetIdThrowsIllegalArgumentExceptionGivenNegativeId() {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_ID_NEGATIVE_OR_ZERO.toString());
 
-		final long negativeId = -1L;
+		final Long negativeId = new Long(-1L);
 		final Product testProduct = new Product();
 		testProduct.setId(negativeId);
 	}
@@ -76,7 +86,7 @@ public class ProductTest {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(Error.PRODUCT_ID_NEGATIVE_OR_ZERO.toString());
 
-		final long zeroedId = 0L;
+		final Long zeroedId = new Long(0L);
 		final Product testProduct = new Product();
 		testProduct.setId(zeroedId);
 	}

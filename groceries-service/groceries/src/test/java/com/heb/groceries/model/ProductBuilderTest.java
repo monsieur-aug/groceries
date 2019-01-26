@@ -13,7 +13,7 @@ import com.heb.groceries.error.Error;
 
 public class ProductBuilderTest {
 
-	private final long			validId				= 1L;
+	private final Long			validId				= new Long(1L);
 	private final String		validDescription	= "Tasty Cakes";
 	private final LocalDate		validLastSold		= LocalDate.of(1970, 1, 1);
 	private final int			validShelfLifeDays	= 30;
