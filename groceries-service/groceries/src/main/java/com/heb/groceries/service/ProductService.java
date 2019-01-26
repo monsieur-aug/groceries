@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.heb.groceries.exception.ClientInputInvalidException;
+import com.heb.groceries.exception.DataNotFoundException;
 import com.heb.groceries.model.Product;
 import com.heb.groceries.model.ProductBuilder;
 
@@ -63,11 +64,15 @@ public class ProductService {
 		Product retrievedProduct = null;
 
 		throwClientInputInvalidExceptionIfInvalidId(id);
-		
+
 		for (final Product product : allProducts) {
 			if (product.getId() == id) {
 				retrievedProduct = product;
 			}
+		}
+
+		if (retrievedProduct == null) {
+			throw new DataNotFoundException("Product with id " + id + " was not found.");
 		}
 
 		return retrievedProduct;
