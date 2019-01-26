@@ -151,7 +151,7 @@ public class Product {
 		return this.cost;
 	}
 
-	public void setCost(BigDecimal cost) {
+	public void setCost(final BigDecimal cost) {
 		if (cost == null) {
 			throw new IllegalArgumentException(Error.PRODUCT_COST_NULL.toString());
 		}
@@ -161,6 +161,28 @@ public class Product {
 		}
 
 		this.cost = cost;
+	}
+
+	@Override
+	public boolean equals(final Object other) {
+		if (this == other) {
+			return true;
+		}
+
+		if (other == null) {
+			return false;
+		}
+
+		if (this.getClass() != other.getClass()) {
+			return false;
+		}
+
+		final Product otherProduct = (Product) other;
+
+		return id.equals(otherProduct.id) && description.equals(otherProduct.description) && lastSold.equals(otherProduct.lastSold)
+						&& shelfLifeDays.equals(otherProduct.shelfLifeDays) && department.contentEquals(otherProduct.department)
+						&& price.equals(otherProduct.price) && unit.equals(otherProduct.unit) && xFor.equals(otherProduct.xFor)
+						&& cost.equals(otherProduct.cost);
 	}
 
 }
