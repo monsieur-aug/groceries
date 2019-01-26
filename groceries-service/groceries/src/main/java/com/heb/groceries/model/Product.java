@@ -2,6 +2,7 @@ package com.heb.groceries.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -151,7 +152,7 @@ public class Product {
 		return this.cost;
 	}
 
-	public void setCost(BigDecimal cost) {
+	public void setCost(final BigDecimal cost) {
 		if (cost == null) {
 			throw new IllegalArgumentException(Error.PRODUCT_COST_NULL.toString());
 		}
@@ -161,6 +162,35 @@ public class Product {
 		}
 
 		this.cost = cost;
+	}
+
+	@Override
+	public boolean equals(final Object other) {
+		if (this == other) {
+			return true;
+		}
+
+		if (other == null) {
+			return false;
+		}
+
+		if (this.getClass() != other.getClass()) {
+			return false;
+		}
+
+		final Product otherProduct = (Product) other;
+
+		return id.equals(otherProduct.id) && description.equals(otherProduct.description) && lastSold.equals(otherProduct.lastSold)
+						&& shelfLifeDays.equals(otherProduct.shelfLifeDays) && department.contentEquals(otherProduct.department)
+						&& price.equals(otherProduct.price) && unit.equals(otherProduct.unit) && xFor.equals(otherProduct.xFor)
+						&& cost.equals(otherProduct.cost);
+	}
+
+	@Override
+	public int hashCode() {
+		return 7 * Long.hashCode(id) + 11 * Objects.hashCode(description) + 13 * Objects.hashCode(lastSold) + 17 * Integer.hashCode(shelfLifeDays)
+						+ 19 * Objects.hashCode(department) + 23 * Objects.hashCode(price) + 29 * Objects.hashCode(unit) + 31 * Integer.hashCode(xFor)
+						+ 37 *Objects.hashCode(cost);
 	}
 
 }
