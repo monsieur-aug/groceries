@@ -1,5 +1,6 @@
 package com.heb.groceries.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -8,17 +9,19 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.heb.groceries.error.Error;
 
-public class Product {
+public class Product implements Serializable {
 
-	private Long		id;
-	private String		description;
-	private LocalDate	lastSold;
-	private Integer		shelfLifeDays;
-	private String		department;
-	private BigDecimal	price;
-	private String		unit;
-	private Integer		xFor;
-	private BigDecimal	cost;
+	private static final long	serialVersionUID	= 709110542198236024L;
+
+	private Long				id;
+	private String				description;
+	private LocalDate			lastSold;
+	private Integer				shelfLifeDays;
+	private String				department;
+	private BigDecimal			price;
+	private String				unit;
+	private Integer				xFor;
+	private BigDecimal			cost;
 
 	public Product() {
 
@@ -190,7 +193,7 @@ public class Product {
 	public int hashCode() {
 		return 7 * Long.hashCode(id) + 11 * Objects.hashCode(description) + 13 * Objects.hashCode(lastSold) + 17 * Integer.hashCode(shelfLifeDays)
 						+ 19 * Objects.hashCode(department) + 23 * Objects.hashCode(price) + 29 * Objects.hashCode(unit) + 31 * Integer.hashCode(xFor)
-						+ 37 *Objects.hashCode(cost);
+						+ 37 * Objects.hashCode(cost);
 	}
 
 }
