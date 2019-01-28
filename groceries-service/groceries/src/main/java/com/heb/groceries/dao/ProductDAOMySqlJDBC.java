@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -42,6 +43,7 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	private static final String	SQL_FIND_BY_SHELF_LIFE				= SQL_LIST_ALL + " WHERE shelf_life_days >= ? AND shelf_life_days <= ?";
 	private static final String	SQL_FIND_BY_UNIT					= SQL_LIST_ALL + " WHERE unit LIKE ?";
 	private static final String	SQL_FIND_BY_XFOR					= SQL_LIST_ALL + " WHERE xfor >= ? AND xfor <= ?";
+	private static final String	SQL_FIND_BY_PRICE					= SQL_LIST_ALL + " WHERE price >= ? AND price <= ?";
 
 	private String databaseUrl;
 	private File credentialsFile;
@@ -120,6 +122,12 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	public List<Product> findProductsWithXFor(Integer min, Integer max) throws DAOException {
 		final Object[] xForRange = { min, max };
 		return list(SQL_FIND_BY_XFOR, xForRange);
+	}
+
+	@Override
+	public List<Product> findProductsWithPrice(BigDecimal min, BigDecimal max) throws DAOException {
+		final Object[] priceRange = { min, max };
+		return list(SQL_FIND_BY_PRICE, priceRange);
 	}
 
 	private void verifyDriverExists() {
