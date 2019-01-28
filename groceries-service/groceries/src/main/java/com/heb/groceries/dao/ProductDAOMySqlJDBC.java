@@ -35,9 +35,10 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	private static final String	DEFAULT_PRODUCTS_INVENTORY_FILEPATH	= System.getProperty("user.home") + "/products_inventory.txt";
 	private static final String	FIELD_SEPARATOR						= ",";
 
-	private static final String SQL_LIST_ALL = "SELECT id, description, last_sold_date, shelf_life_days, department, price, unit, xfor, cost FROM Product";
-	private static final String SQL_FIND_BY_ID = SQL_LIST_ALL + " WHERE id = ?";
-	private static final String SQL_FIND_BY_DESCRIPTION = SQL_LIST_ALL + " WHERE description LIKE ?";
+	private static final String	SQL_LIST_ALL						= "SELECT id, description, last_sold_date, shelf_life_days, department, price, unit, xfor, cost FROM Product";
+	private static final String	SQL_FIND_BY_ID						= SQL_LIST_ALL + " WHERE id = ?";
+	private static final String	SQL_FIND_BY_DESCRIPTION				= SQL_LIST_ALL + " WHERE description LIKE ?";
+	private static final String	SQL_FIND_BY_DEPARTMENT				= SQL_LIST_ALL + " WHERE department LIKE ?";
 
 	private String databaseUrl;
 	private File credentialsFile;
@@ -94,6 +95,11 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	@Override
 	public List<Product> findProductsWithDescription(String description) throws DAOException {
 		return list(SQL_FIND_BY_DESCRIPTION, "%" + description + "%");
+	}
+
+	@Override
+	public List<Product> findProductsWithDepartment(String department) throws DAOException {
+		return list(SQL_FIND_BY_DEPARTMENT, "%" + department + "%");
 	}
 
 	private void verifyDriverExists() {

@@ -44,6 +44,17 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	public List<Product> findProductsWithDepartment(final String department) {
+		List<Product> retrievedProducts = new ArrayList<>();
+
+		throwClientInputInvalidExceptionIfInvalidDepartment(department);
+
+		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
+		retrievedProducts = productDAO.findProductsWithDepartment(department);
+
+		return retrievedProducts;
+	}
+
 	private void throwClientInputInvalidExceptionIfInvalidId(final long id) {
 		try {
 			final Product idValidationProduct = new Product();
@@ -57,6 +68,15 @@ public class ProductService {
 		try {
 			final Product descriptionValidationProduct = new Product();
 			descriptionValidationProduct.setDescription(description);
+		} catch (IllegalArgumentException iae) {
+			throw new ClientInputInvalidException(iae.getMessage());
+		}
+	}
+
+	private void throwClientInputInvalidExceptionIfInvalidDepartment(final String department) {
+		try {
+			final Product departmentValidationProduct = new Product();
+			departmentValidationProduct.setDepartment(department);
 		} catch (IllegalArgumentException iae) {
 			throw new ClientInputInvalidException(iae.getMessage());
 		}

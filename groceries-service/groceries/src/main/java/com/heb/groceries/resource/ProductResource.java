@@ -39,9 +39,13 @@ public class ProductResource {
 		final MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
 		List<Product> retrievedProducts = null;
 
-		if (queryParams != null) {
+		if (!queryParams.isEmpty()) {
 			if (isGetProductsByDescription(queryParams)) {
 				retrievedProducts = getProductsByDescription(queryParams);
+			} else if (isGetProductsByDepartment(queryParams)) {
+				retrievedProducts = getProductsByDepartment(queryParams);
+			} else {
+				// TODO: properly handle unrecognized query param by returning an error
 			}
 		} else {
 			retrievedProducts = this.service.getAllProducts();
@@ -69,11 +73,23 @@ public class ProductResource {
 		return queryParams.containsKey(QueryParam.DESCRIPTION.toString());
 	}
 
+	private boolean isGetProductsByDepartment(final MultivaluedMap<String, String> queryParams) {
+		return queryParams.containsKey(QueryParam.DEPARTMENT.toString());
+	}
+
 	private List<Product> getProductsByDescription(final MultivaluedMap<String, String> queryParams) {
 		final String description = queryParams.getFirst(QueryParam.DESCRIPTION.toString());
-	
+
 		final List<Product> retrievedProducts = this.service.findProductsWithDescription(description);
-	
+
+		return retrievedProducts;
+	}
+
+	private List<Product> getProductsByDepartment(final MultivaluedMap<String, String> queryParams) {
+		final String department = queryParams.getFirst(QueryParam.DEPARTMENT.toString());
+
+		final List<Product> retrievedProducts = this.service.findProductsWithDepartment(department);
+
 		return retrievedProducts;
 	}
 
