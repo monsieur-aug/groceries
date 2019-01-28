@@ -52,6 +52,8 @@ public class ProductResource {
 				retrievedProducts = getProductsByXFor(queryParams);
 			} else if (isGetProductsByPrice(queryParams)) {
 				retrievedProducts = getProductsByPrice(queryParams);
+			} else if (isGetProductsByCost(queryParams)) {
+				retrievedProducts = getProductsByCost(queryParams);
 			} else {
 				// TODO: properly handle unrecognized query param by returning an error
 			}
@@ -101,6 +103,10 @@ public class ProductResource {
 		return queryParams.containsKey(QueryParam.PRICE_MIN.toString()) && queryParams.containsKey(QueryParam.PRICE_MAX.toString());
 	}
 
+	private boolean isGetProductsByCost(final MultivaluedMap<String, String> queryParams) {
+		return queryParams.containsKey(QueryParam.COST_MIN.toString()) && queryParams.containsKey(QueryParam.COST_MAX.toString());
+	}
+
 	private List<Product> getProductsByDescription(final MultivaluedMap<String, String> queryParams) {
 		final String description = queryParams.getFirst(QueryParam.DESCRIPTION.toString());
 
@@ -148,6 +154,15 @@ public class ProductResource {
 		final String maximum = queryParams.getFirst(QueryParam.PRICE_MAX.toString());
 
 		final List<Product> retrievedProducts = this.service.findProductsWithPrice(minimum, maximum);
+
+		return retrievedProducts;
+	}
+
+	private List<Product> getProductsByCost(final MultivaluedMap<String, String> queryParams) {
+		final String minimum = queryParams.getFirst(QueryParam.COST_MIN.toString());
+		final String maximum = queryParams.getFirst(QueryParam.COST_MAX.toString());
+
+		final List<Product> retrievedProducts = this.service.findProductsWithCost(minimum, maximum);
 
 		return retrievedProducts;
 	}
