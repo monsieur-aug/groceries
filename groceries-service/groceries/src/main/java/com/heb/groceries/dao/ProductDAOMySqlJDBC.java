@@ -39,6 +39,7 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	private static final String	SQL_FIND_BY_ID						= SQL_LIST_ALL + " WHERE id = ?";
 	private static final String	SQL_FIND_BY_DESCRIPTION				= SQL_LIST_ALL + " WHERE description LIKE ?";
 	private static final String	SQL_FIND_BY_DEPARTMENT				= SQL_LIST_ALL + " WHERE department LIKE ?";
+	private static final String	SQL_FIND_BY_SHELF_LIFE				= SQL_LIST_ALL + " WHERE shelf_life_days >= ? AND shelf_life_days <= ?";
 
 	private String databaseUrl;
 	private File credentialsFile;
@@ -100,6 +101,12 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	@Override
 	public List<Product> findProductsWithDepartment(String department) throws DAOException {
 		return list(SQL_FIND_BY_DEPARTMENT, "%" + department + "%");
+	}
+
+	@Override
+	public List<Product> findProductsWithShelfLife(Integer min, Integer max) throws DAOException {
+		final Object[] shelfLifeRange = { min, max };
+		return list(SQL_FIND_BY_SHELF_LIFE, shelfLifeRange);
 	}
 
 	private void verifyDriverExists() {
@@ -346,8 +353,8 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 			while (resultSet.next()) {
 				products.add(map(resultSet));
 			}
-		} catch (IOException | SQLException sqle) {
-			throw new DAOException(sqle);
+		} catch (IOException | SQLException e) {
+			throw new DAOException(e);
 		}
 
 		return products;

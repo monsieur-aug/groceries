@@ -44,6 +44,8 @@ public class ProductResource {
 				retrievedProducts = getProductsByDescription(queryParams);
 			} else if (isGetProductsByDepartment(queryParams)) {
 				retrievedProducts = getProductsByDepartment(queryParams);
+			} else if (isGetProductsByShelfLifeDays(queryParams)) {
+				retrievedProducts = getProductsByShelfLife(queryParams);
 			} else {
 				// TODO: properly handle unrecognized query param by returning an error
 			}
@@ -77,6 +79,10 @@ public class ProductResource {
 		return queryParams.containsKey(QueryParam.DEPARTMENT.toString());
 	}
 
+	private boolean isGetProductsByShelfLifeDays(final MultivaluedMap<String, String> queryParams) {
+		return queryParams.containsKey(QueryParam.SHELF_LIFE_DAYS_MIN.toString()) && queryParams.containsKey(QueryParam.SHELF_LIFE_DAYS_MAX.toString());
+	}
+
 	private List<Product> getProductsByDescription(final MultivaluedMap<String, String> queryParams) {
 		final String description = queryParams.getFirst(QueryParam.DESCRIPTION.toString());
 
@@ -89,6 +95,15 @@ public class ProductResource {
 		final String department = queryParams.getFirst(QueryParam.DEPARTMENT.toString());
 
 		final List<Product> retrievedProducts = this.service.findProductsWithDepartment(department);
+
+		return retrievedProducts;
+	}
+
+	private List<Product> getProductsByShelfLife(final MultivaluedMap<String, String> queryParams) {
+		final String minimum = queryParams.getFirst(QueryParam.SHELF_LIFE_DAYS_MIN.toString());
+		final String maximum = queryParams.getFirst(QueryParam.SHELF_LIFE_DAYS_MAX.toString());
+
+		final List<Product> retrievedProducts = this.service.findProductWithShelfLifeDays(minimum, maximum);
 
 		return retrievedProducts;
 	}

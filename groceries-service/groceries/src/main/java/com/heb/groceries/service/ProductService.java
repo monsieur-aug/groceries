@@ -55,6 +55,20 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	public List<Product> findProductWithShelfLifeDays(final String minimum, final String maximum) {
+		List<Product> retrievedProducts = new ArrayList<>();
+
+		throwClientInputInvalidExceptionIfInvalidShelfLifeRange(minimum, maximum);
+
+		final Integer min = Integer.parseInt(minimum);
+		final Integer max = Integer.parseInt(maximum);
+
+		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
+		retrievedProducts = productDAO.findProductsWithShelfLife(min, max);
+
+		return retrievedProducts;
+	}
+
 	private void throwClientInputInvalidExceptionIfInvalidId(final long id) {
 		try {
 			final Product idValidationProduct = new Product();
@@ -77,6 +91,25 @@ public class ProductService {
 		try {
 			final Product departmentValidationProduct = new Product();
 			departmentValidationProduct.setDepartment(department);
+		} catch (IllegalArgumentException iae) {
+			throw new ClientInputInvalidException(iae.getMessage());
+		}
+	}
+
+	private void throwClientInputInvalidExceptionIfInvalidShelfLifeRange(final String minimum, final String maximum) {
+		try {
+			final Integer min = Integer.parseInt(minimum);
+			final Integer max = Integer.parseInt(maximum);
+
+			final Product shelfLifeDaysValidationProduct = new Product();
+			shelfLifeDaysValidationProduct.setShelfLifeDays(min);
+			shelfLifeDaysValidationProduct.setShelfLifeDays(max);
+
+			if (min > max) {
+				throw new IllegalArgumentException("The minimum value must be less than or equal to the maximum value.");
+			}
+		} catch (NumberFormatException nfe) {
+			throw new ClientInputInvalidException("The minimum and maximum shelf life values must be whole numbers.");
 		} catch (IllegalArgumentException iae) {
 			throw new ClientInputInvalidException(iae.getMessage());
 		}
