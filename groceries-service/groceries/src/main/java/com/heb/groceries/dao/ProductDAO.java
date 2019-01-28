@@ -15,4 +15,6 @@ public interface ProductDAO {
 
 	public List<Product> findProductsWithDepartment(String department) throws DAOException;
 
+	public List<Product> findProductsWithShelfLife(Integer min, Integer max) throws DAOException;
+
 }
