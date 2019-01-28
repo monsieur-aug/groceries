@@ -195,7 +195,7 @@ public class ProductResource {
 		final String minimum = queryParams.getFirst(QueryParam.SHELF_LIFE_DAYS_MIN.toString());
 		final String maximum = queryParams.getFirst(QueryParam.SHELF_LIFE_DAYS_MAX.toString());
 
-		final List<Product> retrievedProducts = this.service.findProductWithShelfLifeDays(minimum, maximum);
+		final List<Product> retrievedProducts = this.service.findProductsWithShelfLifeDays(minimum, maximum);
 
 		return retrievedProducts;
 	}

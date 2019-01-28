@@ -58,7 +58,7 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
-	public List<Product> findProductWithShelfLifeDays(final String minimum, final String maximum) {
+	public List<Product> findProductsWithShelfLifeDays(final String minimum, final String maximum) {
 		List<Product> retrievedProducts = new ArrayList<>();
 
 		throwClientInputInvalidExceptionIfInvalidShelfLifeRange(minimum, maximum);
