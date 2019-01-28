@@ -7,7 +7,9 @@ public enum QueryParam {
 	SHELF_LIFE_DAYS_MAX("shelfLifeMax"),
 	UNIT("unit"),
 	XFOR_MIN("xForMin"),
-	XFOR_MAX("xForMax")
+	XFOR_MAX("xForMax"),
+	PRICE_MIN("priceMin"),
+	PRICE_MAX("priceMax")
 	;
 
 	private final String key;
