@@ -11,7 +11,9 @@ public enum QueryParam {
 	PRICE_MIN("priceMin"),
 	PRICE_MAX("priceMax"),
 	COST_MIN("costMin"),
-	COST_MAX("costMax")
+	COST_MAX("costMax"),
+	LAST_SOLD_DATE_START("lastSoldDateFrom"),
+	LAST_SOLD_DATE_END("lastSoldDateUntil")
 	;
 
 	private final String key;
