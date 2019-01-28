@@ -1,5 +1,6 @@
 package com.heb.groceries.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.heb.groceries.dao.ProductDAO;
@@ -13,7 +14,7 @@ public class ProductService {
 	public List<Product> getAllProducts() {
 		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
 		final List<Product> allProducts = productDAO.listAllProducts();
-		
+
 		return allProducts;
 	}
 
@@ -32,10 +33,30 @@ public class ProductService {
 		return retrievedProduct;
 	}
 
+	public List<Product> findProductsWithDescription(final String description) {
+		List<Product> retrievedProducts = new ArrayList<>();
+
+		throwClientInputInvalidExceptionIfInvalidDescription(description);
+
+		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
+		retrievedProducts = productDAO.findProductsWithDescription(description);
+
+		return retrievedProducts;
+	}
+
 	private void throwClientInputInvalidExceptionIfInvalidId(final long id) {
 		try {
 			final Product idValidationProduct = new Product();
 			idValidationProduct.setId(id);
+		} catch (IllegalArgumentException iae) {
+			throw new ClientInputInvalidException(iae.getMessage());
+		}
+	}
+
+	private void throwClientInputInvalidExceptionIfInvalidDescription(final String description) {
+		try {
+			final Product descriptionValidationProduct = new Product();
+			descriptionValidationProduct.setDescription(description);
 		} catch (IllegalArgumentException iae) {
 			throw new ClientInputInvalidException(iae.getMessage());
 		}

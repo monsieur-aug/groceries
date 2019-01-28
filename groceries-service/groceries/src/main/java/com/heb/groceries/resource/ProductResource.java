@@ -6,10 +6,14 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriInfo;
 
 import com.heb.groceries.error.Error;
 import com.heb.groceries.model.Product;
+import com.heb.groceries.resource.query.QueryParam;
 import com.heb.groceries.service.ProductService;
 
 @Path("products")
@@ -31,8 +35,19 @@ public class ProductResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Product> getProducts() {
-		return this.service.getAllProducts();
+	public List<Product> getProducts(@Context final UriInfo uriInfo) {
+		final MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
+		List<Product> retrievedProducts = null;
+
+		if (queryParams != null) {
+			if (isGetProductsByDescription(queryParams)) {
+				retrievedProducts = getProductsByDescription(queryParams);
+			}
+		} else {
+			retrievedProducts = this.service.getAllProducts();
+		}
+
+		return retrievedProducts;
 	}
 
 	@GET
@@ -48,6 +63,18 @@ public class ProductResource {
 		}
 
 		this.service = service;
+	}
+
+	private boolean isGetProductsByDescription(final MultivaluedMap<String, String> queryParams) {
+		return queryParams.containsKey(QueryParam.DESCRIPTION.toString());
+	}
+
+	private List<Product> getProductsByDescription(final MultivaluedMap<String, String> queryParams) {
+		final String description = queryParams.getFirst(QueryParam.DESCRIPTION.toString());
+	
+		final List<Product> retrievedProducts = this.service.findProductsWithDescription(description);
+	
+		return retrievedProducts;
 	}
 
 }

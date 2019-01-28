@@ -36,7 +36,8 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	private static final String	FIELD_SEPARATOR						= ",";
 
 	private static final String SQL_LIST_ALL = "SELECT id, description, last_sold_date, shelf_life_days, department, price, unit, xfor, cost FROM Product";
-	private static final String SQL_FIND_BY_ID = "SELECT id, description, last_sold_date, shelf_life_days, department, price, unit, xfor, cost FROM Product WHERE id = ?";
+	private static final String SQL_FIND_BY_ID = SQL_LIST_ALL + " WHERE id = ?";
+	private static final String SQL_FIND_BY_DESCRIPTION = SQL_LIST_ALL + " WHERE description LIKE ?";
 
 	private String databaseUrl;
 	private File credentialsFile;
@@ -88,6 +89,11 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	@Override
 	public Product findProductWithId(Long id) throws DAOException {
 		return find(SQL_FIND_BY_ID, id);
+	}
+
+	@Override
+	public List<Product> findProductsWithDescription(String description) throws DAOException {
+		return list(SQL_FIND_BY_DESCRIPTION, "%" + description + "%");
 	}
 
 	private void verifyDriverExists() {
@@ -322,7 +328,25 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 
 		return product;
 	}
-	
+
+	private List<Product> list(final String sql, Object... values) {
+		final List<Product> products = new ArrayList<>();
+
+		try (
+			final Connection connection = openConnection();
+			final PreparedStatement statement = prepareStatementWithValues(connection, sql, values);
+			final ResultSet resultSet = statement.executeQuery();
+		) {
+			while (resultSet.next()) {
+				products.add(map(resultSet));
+			}
+		} catch (IOException | SQLException sqle) {
+			throw new DAOException(sqle);
+		}
+
+		return products;
+	}
+
 	private PreparedStatement prepareStatementWithValues(final Connection connection, final String sqlQuery, Object... values) throws SQLException {
 		final PreparedStatement statement = connection.prepareStatement(sqlQuery);
 		setValuesInStatement(statement, values);

@@ -10,5 +10,7 @@ public interface ProductDAO {
 	public List<Product> listAllProducts() throws DAOException;
 
 	public Product findProductWithId(Long id) throws DAOException;
+	
+	public List<Product> findProductsWithDescription(String description) throws DAOException;
 
 }
