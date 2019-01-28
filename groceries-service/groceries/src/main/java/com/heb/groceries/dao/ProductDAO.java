@@ -1,5 +1,6 @@
 package com.heb.groceries.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.heb.groceries.dao.exception.DAOException;
@@ -20,5 +21,7 @@ public interface ProductDAO {
 	public List<Product> findProductsWithUnit(String unit) throws DAOException;
 
 	public List<Product> findProductsWithXFor(Integer min, Integer max) throws DAOException;
+	
+	public List<Product> findProductsWithPrice(BigDecimal min, BigDecimal max) throws DAOException;
 
 }
