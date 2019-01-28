@@ -109,6 +109,20 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	public List<Product> findProductsWithCost(final String minimum, final String maximum) {
+		List<Product> retrievedProducts = new ArrayList<>();
+
+		throwClientInputInvalidExceptionIfInvalidCostRange(minimum, maximum);
+
+		final BigDecimal min = new BigDecimal(minimum);
+		final BigDecimal max = new BigDecimal(maximum);
+
+		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
+		retrievedProducts = productDAO.findProductsWithCost(min, max);
+
+		return retrievedProducts;
+	}
+
 	private void throwClientInputInvalidExceptionIfInvalidId(final long id) {
 		try {
 			final Product idValidationProduct = new Product();
@@ -197,6 +211,25 @@ public class ProductService {
 			}
 		} catch (NumberFormatException nfe) {
 			throw new ClientInputInvalidException("The minimum and maximum price values must be whole or decimal numbers.");
+		} catch (IllegalArgumentException iae) {
+			throw new ClientInputInvalidException(iae.getMessage());
+		}
+	}
+
+	private void throwClientInputInvalidExceptionIfInvalidCostRange(final String minimum, final String maximum) {
+		try {
+			final BigDecimal min = new BigDecimal(minimum);
+			final BigDecimal max = new BigDecimal(maximum);
+
+			final Product costValidationProduct = new Product();
+			costValidationProduct.setCost(min);
+			costValidationProduct.setCost(max);
+
+			if (min.compareTo(max) > 0) {
+				throw new IllegalArgumentException("The minimum value must be less than or equal to the maximum value.");
+			}
+		} catch (NumberFormatException nfe) {
+			throw new ClientInputInvalidException("The minimum and maximum cost values must be whole or decimal numbers.");
 		} catch (IllegalArgumentException iae) {
 			throw new ClientInputInvalidException(iae.getMessage());
 		}

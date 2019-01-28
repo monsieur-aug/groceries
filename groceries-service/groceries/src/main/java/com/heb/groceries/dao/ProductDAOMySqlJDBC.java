@@ -44,6 +44,7 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	private static final String	SQL_FIND_BY_UNIT					= SQL_LIST_ALL + " WHERE unit LIKE ?";
 	private static final String	SQL_FIND_BY_XFOR					= SQL_LIST_ALL + " WHERE xfor >= ? AND xfor <= ?";
 	private static final String	SQL_FIND_BY_PRICE					= SQL_LIST_ALL + " WHERE price >= ? AND price <= ?";
+	private static final String	SQL_FIND_BY_COST					= SQL_LIST_ALL + " WHERE cost >= ? AND cost <= ?";
 
 	private String databaseUrl;
 	private File credentialsFile;
@@ -128,6 +129,12 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	public List<Product> findProductsWithPrice(BigDecimal min, BigDecimal max) throws DAOException {
 		final Object[] priceRange = { min, max };
 		return list(SQL_FIND_BY_PRICE, priceRange);
+	}
+
+	@Override
+	public List<Product> findProductsWithCost(BigDecimal min, BigDecimal max) throws DAOException {
+		final Object[] costRange = { min, max };
+		return list(SQL_FIND_BY_COST, costRange);
 	}
 
 	private void verifyDriverExists() {
