@@ -11,7 +11,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import com.heb.groceries.error.Error;
+import com.heb.groceries.exception.UnsupportedQueryException;
 import com.heb.groceries.model.Product;
 import com.heb.groceries.resource.query.QueryParam;
 import com.heb.groceries.service.ProductService;
@@ -39,28 +42,42 @@ public class ProductResource {
 		final MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
 		List<Product> retrievedProducts = null;
 
-		if (!queryParams.isEmpty()) {
+		if (queryParams.isEmpty()) {
+			retrievedProducts = this.service.getAllProducts();
+		} else if (isQuerySupported(queryParams)) {
 			if (isGetProductsByDescription(queryParams)) {
-				retrievedProducts = getProductsByDescription(queryParams);
-			} else if (isGetProductsByDepartment(queryParams)) {
-				retrievedProducts = getProductsByDepartment(queryParams);
-			} else if (isGetProductsByShelfLifeDays(queryParams)) {
-				retrievedProducts = getProductsByShelfLife(queryParams);
-			} else if (isGetProductsByUnit(queryParams)) {
-				retrievedProducts = getProductsByUnit(queryParams);
-			} else if (isGetProductsByXFor(queryParams)) {
-				retrievedProducts = getProductsByXFor(queryParams);
-			} else if (isGetProductsByPrice(queryParams)) {
-				retrievedProducts = getProductsByPrice(queryParams);
-			} else if (isGetProductsByCost(queryParams)) {
-				retrievedProducts = getProductsByCost(queryParams);
-			} else if (isGetProductsByLastSoldDate(queryParams)) {
-				retrievedProducts = getProductsByLastSoldDate(queryParams);
-			} else {
-				// TODO: properly handle unrecognized query param by returning an error
+				retrievedProducts = merge(retrievedProducts, getProductsByDescription(queryParams));
+			}
+
+			if (isGetProductsByDepartment(queryParams)) {
+				retrievedProducts = merge(retrievedProducts, getProductsByDepartment(queryParams));
+			}
+
+			if (isGetProductsByShelfLifeDays(queryParams)) {
+				retrievedProducts = merge(retrievedProducts, getProductsByShelfLife(queryParams));
+			}
+
+			if (isGetProductsByUnit(queryParams)) {
+				retrievedProducts = merge(retrievedProducts, getProductsByUnit(queryParams));
+			}
+
+			if (isGetProductsByXFor(queryParams)) {
+				retrievedProducts = merge(retrievedProducts, getProductsByXFor(queryParams));
+			}
+
+			if (isGetProductsByPrice(queryParams)) {
+				retrievedProducts = merge(retrievedProducts, getProductsByPrice(queryParams));
+			}
+
+			if (isGetProductsByCost(queryParams)) {
+				retrievedProducts = merge(retrievedProducts, getProductsByCost(queryParams));
+			}
+
+			if (isGetProductsByLastSoldDate(queryParams)) {
+				retrievedProducts = merge(retrievedProducts, getProductsByLastSoldDate(queryParams));
 			}
 		} else {
-			retrievedProducts = this.service.getAllProducts();
+			throw new UnsupportedQueryException("The provided query param combination is invalid.");
 		}
 
 		return retrievedProducts;
@@ -80,6 +97,16 @@ public class ProductResource {
 
 		this.service = service;
 	}
+	
+	private boolean isQuerySupported(final MultivaluedMap<String, String> queryParams) {
+		for (final String queryParam : queryParams.keySet()) {
+			if (!QueryParam.ALL_PARAMS.contains(queryParam)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 
 	private boolean isGetProductsByDescription(final MultivaluedMap<String, String> queryParams) {
 		return queryParams.containsKey(QueryParam.DESCRIPTION.toString());
@@ -90,7 +117,14 @@ public class ProductResource {
 	}
 
 	private boolean isGetProductsByShelfLifeDays(final MultivaluedMap<String, String> queryParams) {
-		return queryParams.containsKey(QueryParam.SHELF_LIFE_DAYS_MIN.toString()) && queryParams.containsKey(QueryParam.SHELF_LIFE_DAYS_MAX.toString());
+		final boolean containsMinShelfLifeDays = queryParams.containsKey(QueryParam.SHELF_LIFE_DAYS_MIN.toString());
+		final boolean containsMaxShelfLifeDays = queryParams.containsKey(QueryParam.SHELF_LIFE_DAYS_MAX.toString());
+
+		if (containsMinShelfLifeDays ^ containsMaxShelfLifeDays) {
+			throw new UnsupportedQueryException("Shelf life queries must specify minimum and maximum days.");
+		}
+
+		return containsMinShelfLifeDays && containsMaxShelfLifeDays;
 	}
 
 	private boolean isGetProductsByUnit(final MultivaluedMap<String, String> queryParams) {
@@ -98,19 +132,47 @@ public class ProductResource {
 	}
 
 	private boolean isGetProductsByXFor(final MultivaluedMap<String, String> queryParams) {
-		return queryParams.containsKey(QueryParam.XFOR_MIN.toString()) && queryParams.containsKey(QueryParam.XFOR_MAX.toString());
+		final boolean containsMinXFor = queryParams.containsKey(QueryParam.XFOR_MIN.toString());
+		final boolean containsMaxXFor = queryParams.containsKey(QueryParam.XFOR_MAX.toString());
+
+		if (containsMinXFor ^ containsMaxXFor) {
+			throw new UnsupportedQueryException("XFor queries must specify minimum and maximum values.");
+		}
+
+		return containsMinXFor && containsMaxXFor;
 	}
 
 	private boolean isGetProductsByPrice(final MultivaluedMap<String, String> queryParams) {
-		return queryParams.containsKey(QueryParam.PRICE_MIN.toString()) && queryParams.containsKey(QueryParam.PRICE_MAX.toString());
+		final boolean containsMinPrice = queryParams.containsKey(QueryParam.PRICE_MIN.toString());
+		final boolean containsMaxPrice = queryParams.containsKey(QueryParam.PRICE_MAX.toString());
+
+		if (containsMinPrice ^ containsMaxPrice) {
+			throw new UnsupportedQueryException("Price queries must specify minimum and maximum prices.");
+		}
+
+		return containsMinPrice && containsMaxPrice;
 	}
 
 	private boolean isGetProductsByCost(final MultivaluedMap<String, String> queryParams) {
-		return queryParams.containsKey(QueryParam.COST_MIN.toString()) && queryParams.containsKey(QueryParam.COST_MAX.toString());
+		final boolean containsMinCost = queryParams.containsKey(QueryParam.COST_MIN.toString());
+		final boolean containsMaxCost = queryParams.containsKey(QueryParam.COST_MAX.toString());
+
+		if (containsMinCost ^ containsMaxCost) {
+			throw new UnsupportedQueryException("Cost queries must specify minimum and maximum costs.");
+		}
+
+		return containsMinCost && containsMaxCost;
 	}
 
 	private boolean isGetProductsByLastSoldDate(final MultivaluedMap<String, String> queryParams) {
-		return queryParams.containsKey(QueryParam.LAST_SOLD_DATE_START.toString()) && queryParams.containsKey(QueryParam.LAST_SOLD_DATE_END.toString());
+		final boolean containsLastSoldDateStart = queryParams.containsKey(QueryParam.LAST_SOLD_DATE_START.toString());
+		final boolean containsLastSoldDateEnd = queryParams.containsKey(QueryParam.LAST_SOLD_DATE_END.toString());
+
+		if (containsLastSoldDateStart ^ containsLastSoldDateEnd) {
+			throw new UnsupportedQueryException("Last sold date queries must specify start and end dates.");
+		}
+
+		return containsLastSoldDateStart && containsLastSoldDateEnd;
 	}
 
 	private List<Product> getProductsByDescription(final MultivaluedMap<String, String> queryParams) {
@@ -180,6 +242,18 @@ public class ProductResource {
 		final List<Product> retrievedProducts = this.service.findProductsWithLastSoldDate(startDate, endDate);
 
 		return retrievedProducts;
+	}
+
+	private List<Product> merge(final List<Product> original, final List<Product> additional) {
+		if (original == null) {
+			return additional;
+		}
+
+		if (additional == null) {
+			return original;
+		}
+
+		return (List<Product>) CollectionUtils.intersection(original, additional);
 	}
 
 }
