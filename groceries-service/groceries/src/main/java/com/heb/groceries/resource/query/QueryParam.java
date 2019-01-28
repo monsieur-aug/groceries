@@ -1,7 +1,8 @@
 package com.heb.groceries.resource.query;
 
 public enum QueryParam {
-	DESCRIPTION("descriptionContains");
+	DESCRIPTION("descriptionContains"),
+	DEPARTMENT("departmentContains");
 
 	private final String key;
 
