@@ -2,7 +2,7 @@ package com.heb.groceries.resource.query;
 
 public enum QueryParam {
 	DESCRIPTION("descriptionContains"),
-	DEPARTMENT("departmentContains"),
+	DEPARTMENT("department"),
 	SHELF_LIFE_DAYS_MIN("shelfLifeMin"),
 	SHELF_LIFE_DAYS_MAX("shelfLifeMax"),
 	UNIT("unit");

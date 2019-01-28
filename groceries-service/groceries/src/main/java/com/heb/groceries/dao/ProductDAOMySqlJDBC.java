@@ -101,7 +101,7 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 
 	@Override
 	public List<Product> findProductsWithDepartment(String department) throws DAOException {
-		return list(SQL_FIND_BY_DEPARTMENT, "%" + department + "%");
+		return list(SQL_FIND_BY_DEPARTMENT, department);
 	}
 
 	@Override
