@@ -9,7 +9,9 @@ public enum QueryParam {
 	XFOR_MIN("xForMin"),
 	XFOR_MAX("xForMax"),
 	PRICE_MIN("priceMin"),
-	PRICE_MAX("priceMax")
+	PRICE_MAX("priceMax"),
+	COST_MIN("costMin"),
+	COST_MAX("costMax")
 	;
 
 	private final String key;
