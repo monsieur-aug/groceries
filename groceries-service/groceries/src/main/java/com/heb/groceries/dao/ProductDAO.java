@@ -21,7 +21,9 @@ public interface ProductDAO {
 	public List<Product> findProductsWithUnit(String unit) throws DAOException;
 
 	public List<Product> findProductsWithXFor(Integer min, Integer max) throws DAOException;
-	
+
 	public List<Product> findProductsWithPrice(BigDecimal min, BigDecimal max) throws DAOException;
+
+	public List<Product> findProductsWithCost(BigDecimal min, BigDecimal max) throws DAOException;
 
 }
