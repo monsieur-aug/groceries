@@ -54,6 +54,8 @@ public class ProductResource {
 				retrievedProducts = getProductsByPrice(queryParams);
 			} else if (isGetProductsByCost(queryParams)) {
 				retrievedProducts = getProductsByCost(queryParams);
+			} else if (isGetProductsByLastSoldDate(queryParams)) {
+				retrievedProducts = getProductsByLastSoldDate(queryParams);
 			} else {
 				// TODO: properly handle unrecognized query param by returning an error
 			}
@@ -105,6 +107,10 @@ public class ProductResource {
 
 	private boolean isGetProductsByCost(final MultivaluedMap<String, String> queryParams) {
 		return queryParams.containsKey(QueryParam.COST_MIN.toString()) && queryParams.containsKey(QueryParam.COST_MAX.toString());
+	}
+
+	private boolean isGetProductsByLastSoldDate(final MultivaluedMap<String, String> queryParams) {
+		return queryParams.containsKey(QueryParam.LAST_SOLD_DATE_START.toString()) && queryParams.containsKey(QueryParam.LAST_SOLD_DATE_END.toString());
 	}
 
 	private List<Product> getProductsByDescription(final MultivaluedMap<String, String> queryParams) {
@@ -163,6 +169,15 @@ public class ProductResource {
 		final String maximum = queryParams.getFirst(QueryParam.COST_MAX.toString());
 
 		final List<Product> retrievedProducts = this.service.findProductsWithCost(minimum, maximum);
+
+		return retrievedProducts;
+	}
+
+	private List<Product> getProductsByLastSoldDate(final MultivaluedMap<String, String> queryParams) {
+		final String startDate = queryParams.getFirst(QueryParam.LAST_SOLD_DATE_START.toString());
+		final String endDate = queryParams.getFirst(QueryParam.LAST_SOLD_DATE_END.toString());
+
+		final List<Product> retrievedProducts = this.service.findProductsWithLastSoldDate(startDate, endDate);
 
 		return retrievedProducts;
 	}
