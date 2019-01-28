@@ -1,6 +1,8 @@
 package com.heb.groceries.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,6 +125,20 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	public List<Product> findProductsWithLastSoldDate(final String startDate, final String endDate) {
+		List<Product> retrievedProducts = new ArrayList<>();
+
+		throwClientInputInvalidExceptionIfInvalidLastSoldDateRange(startDate, endDate);
+
+		final LocalDate start = LocalDate.parse(startDate);
+		final LocalDate end = LocalDate.parse(endDate);
+
+		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
+		retrievedProducts = productDAO.findProductsWithLastSoldDate(start, end);
+
+		return retrievedProducts;
+	}
+
 	private void throwClientInputInvalidExceptionIfInvalidId(final long id) {
 		try {
 			final Product idValidationProduct = new Product();
@@ -230,6 +246,25 @@ public class ProductService {
 			}
 		} catch (NumberFormatException nfe) {
 			throw new ClientInputInvalidException("The minimum and maximum cost values must be whole or decimal numbers.");
+		} catch (IllegalArgumentException iae) {
+			throw new ClientInputInvalidException(iae.getMessage());
+		}
+	}
+
+	private void throwClientInputInvalidExceptionIfInvalidLastSoldDateRange(final String startDate, final String endDate) {
+		try {
+			final LocalDate start = LocalDate.parse(startDate);
+			final LocalDate end = LocalDate.parse(endDate);
+
+			final Product lastSoldDateValidationProduct = new Product();
+			lastSoldDateValidationProduct.setLastSold(start);
+			lastSoldDateValidationProduct.setLastSold(end);
+
+			if (start.isAfter(end)) {
+				throw new IllegalArgumentException("The start date must occur earlier or at the same date as the end date.");
+			}
+		} catch (DateTimeParseException e) {
+			throw new ClientInputInvalidException("The date must be in the format YYYY-MM-DD.");
 		} catch (IllegalArgumentException iae) {
 			throw new ClientInputInvalidException(iae.getMessage());
 		}
