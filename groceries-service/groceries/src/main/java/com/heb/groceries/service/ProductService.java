@@ -69,6 +69,17 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	public List<Product> findProductsWithUnit(final String unit) {
+		List<Product> retrievedProducts = new ArrayList<>();
+
+		throwClientInputInvalidExceptionIfInvalidUnit(unit);
+
+		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
+		retrievedProducts = productDAO.findProductsWithUnit(unit);
+
+		return retrievedProducts;
+	}
+
 	private void throwClientInputInvalidExceptionIfInvalidId(final long id) {
 		try {
 			final Product idValidationProduct = new Product();
@@ -110,6 +121,15 @@ public class ProductService {
 			}
 		} catch (NumberFormatException nfe) {
 			throw new ClientInputInvalidException("The minimum and maximum shelf life values must be whole numbers.");
+		} catch (IllegalArgumentException iae) {
+			throw new ClientInputInvalidException(iae.getMessage());
+		}
+	}
+
+	private void throwClientInputInvalidExceptionIfInvalidUnit(final String unit) {
+		try {
+			final Product unitValidationProduct = new Product();
+			unitValidationProduct.setUnit(unit);
 		} catch (IllegalArgumentException iae) {
 			throw new ClientInputInvalidException(iae.getMessage());
 		}
