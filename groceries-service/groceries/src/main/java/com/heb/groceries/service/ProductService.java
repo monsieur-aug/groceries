@@ -80,6 +80,20 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	public List<Product> findProductsWithXFor(final String minimum, final String maximum) {
+		List<Product> retrievedProducts = new ArrayList<>();
+
+		throwClientInputInvalidExceptionIfInvalidXForRange(minimum, maximum);
+
+		final Integer min = Integer.parseInt(minimum);
+		final Integer max = Integer.parseInt(maximum);
+
+		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
+		retrievedProducts = productDAO.findProductsWithXFor(min, max);
+
+		return retrievedProducts;
+	}
+
 	private void throwClientInputInvalidExceptionIfInvalidId(final long id) {
 		try {
 			final Product idValidationProduct = new Product();
@@ -130,6 +144,25 @@ public class ProductService {
 		try {
 			final Product unitValidationProduct = new Product();
 			unitValidationProduct.setUnit(unit);
+		} catch (IllegalArgumentException iae) {
+			throw new ClientInputInvalidException(iae.getMessage());
+		}
+	}
+
+	private void throwClientInputInvalidExceptionIfInvalidXForRange(final String minimum, final String maximum) {
+		try {
+			final Integer min = Integer.parseInt(minimum);
+			final Integer max = Integer.parseInt(maximum);
+
+			final Product xForValidationProduct = new Product();
+			xForValidationProduct.setXFor(min);
+			xForValidationProduct.setXFor(max);
+
+			if (min > max) {
+				throw new IllegalArgumentException("The minimum value must be less than or equal to the maximum value.");
+			}
+		} catch (NumberFormatException nfe) {
+			throw new ClientInputInvalidException("The minimum and maximum xFor values must be whole numbers.");
 		} catch (IllegalArgumentException iae) {
 			throw new ClientInputInvalidException(iae.getMessage());
 		}

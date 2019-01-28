@@ -48,6 +48,8 @@ public class ProductResource {
 				retrievedProducts = getProductsByShelfLife(queryParams);
 			} else if (isGetProductsByUnit(queryParams)) {
 				retrievedProducts = getProductsByUnit(queryParams);
+			} else if (isGetProductsByXFor(queryParams)) {
+				retrievedProducts = getProductsByXFor(queryParams);
 			} else {
 				// TODO: properly handle unrecognized query param by returning an error
 			}
@@ -89,6 +91,10 @@ public class ProductResource {
 		return queryParams.containsKey(QueryParam.UNIT.toString());
 	}
 
+	private boolean isGetProductsByXFor(final MultivaluedMap<String, String> queryParams) {
+		return queryParams.containsKey(QueryParam.XFOR_MIN.toString()) && queryParams.containsKey(QueryParam.XFOR_MAX.toString());
+	}
+
 	private List<Product> getProductsByDescription(final MultivaluedMap<String, String> queryParams) {
 		final String description = queryParams.getFirst(QueryParam.DESCRIPTION.toString());
 
@@ -118,6 +124,15 @@ public class ProductResource {
 		final String unit = queryParams.getFirst(QueryParam.UNIT.toString());
 
 		final List<Product> retrievedProducts = this.service.findProductsWithUnit(unit);
+
+		return retrievedProducts;
+	}
+
+	private List<Product> getProductsByXFor(final MultivaluedMap<String, String> queryParams) {
+		final String minimum = queryParams.getFirst(QueryParam.XFOR_MIN.toString());
+		final String maximum = queryParams.getFirst(QueryParam.XFOR_MAX.toString());
+
+		final List<Product> retrievedProducts = this.service.findProductsWithXFor(minimum, maximum);
 
 		return retrievedProducts;
 	}

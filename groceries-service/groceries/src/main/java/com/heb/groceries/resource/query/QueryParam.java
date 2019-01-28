@@ -5,7 +5,10 @@ public enum QueryParam {
 	DEPARTMENT("department"),
 	SHELF_LIFE_DAYS_MIN("shelfLifeMin"),
 	SHELF_LIFE_DAYS_MAX("shelfLifeMax"),
-	UNIT("unit");
+	UNIT("unit"),
+	XFOR_MIN("xForMin"),
+	XFOR_MAX("xForMax")
+	;
 
 	private final String key;
 
