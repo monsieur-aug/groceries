@@ -13,6 +13,8 @@
       <input type="text" id="price" name="price" [(ngModel)]="priceField">
     </div>
 
-    <button id="search-button" type="submit">Search</button>
+    <button id="search-button" type="submit" (click)="findProducts()">Search</button>
   </form>
 </div>
+
+<app-search-results [productsToDisplay]="retrievedProducts"></app-search-results>
