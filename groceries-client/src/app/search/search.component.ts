@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
+  isMoreOptionsExpanded : boolean = false;
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  toggleMoreSearchOptions() {
+    this.isMoreOptionsExpanded = !this.isMoreOptionsExpanded;
+  }
 }

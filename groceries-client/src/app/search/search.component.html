@@ -1,3 +1,18 @@
-<p>
-  search works!
-</p>
+<div>
+  <form>
+    <label for="description">Product Description:</label>
+    <input type="text" id="description" name="description">
+    <button id="more-options-button" type="button" (click)="toggleMoreSearchOptions()">{{ isMoreOptionsExpanded ? "Fewer Options" : "More Options" }}</button>
+
+    <div *ngIf="isMoreOptionsExpanded">
+      <label for="id">Product ID</label>
+      <input type="text" id="id" name="id">
+      <label for="department">Department</label>
+      <input type="text" id="department" name="department">
+      <label for="price">Price</label>
+      <input type="text" id="price" name="price">
+    </div>
+
+    <button id="search-button" type="submit">Search</button>
+  </form>
+</div>
