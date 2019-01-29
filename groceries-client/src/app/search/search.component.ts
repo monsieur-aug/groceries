@@ -9,6 +9,11 @@ export class SearchComponent implements OnInit {
 
   isMoreOptionsExpanded : boolean = false;
 
+  descriptionField : string;
+  idField : string;
+  departmentField : string;
+  priceField : string;
+
   constructor() { }
 
   ngOnInit() {
