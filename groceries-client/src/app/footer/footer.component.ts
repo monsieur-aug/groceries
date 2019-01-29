@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
+  message : string = "H-E-B Developer II Coding Challenge";
+  
   constructor() { }
 
   ngOnInit() {
