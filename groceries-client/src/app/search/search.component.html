@@ -1,0 +1,18 @@
+<div>
+  <form>
+    <label for="description">Product Description:</label>
+    <input type="text" id="description" name="description" [(ngModel)]="descriptionField">
+    <button id="more-options-button" type="button" (click)="toggleMoreSearchOptions()">{{ isMoreOptionsExpanded ? "Fewer Options" : "More Options" }}</button>
+
+    <div *ngIf="isMoreOptionsExpanded">
+      <label for="id">Product ID</label>
+      <input type="text" id="id" name="id" [(ngModel)]="idField">
+      <label for="department">Department</label>
+      <input type="text" id="department" name="department" [(ngModel)]="departmentField">
+      <label for="price">Price</label>
+      <input type="text" id="price" name="price" [(ngModel)]="priceField">
+    </div>
+
+    <button id="search-button" type="submit">Search</button>
+  </form>
+</div>

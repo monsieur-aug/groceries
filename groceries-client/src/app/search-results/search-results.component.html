@@ -1,0 +1,27 @@
+<div>
+  <table *ngIf="products" style="width:100%">
+    <tr>
+      <th>ID</th>
+      <th>Description</th>
+      <th>Last Sold</th>
+      <th>Shelf Life (days)</th>
+      <th>Department</th>
+      <th>Price</th>
+      <th>Unit</th>
+      <th>xFor</th>
+      <th>Cost</th>
+    </tr>
+
+    <tr *ngFor="let product of products">
+      <td>{{ product.id }}</td>
+      <td>{{ product.description }}</td>
+      <td>{{ product.lastSoldDate }}</td>
+      <td>{{ product.shelfLifeDays }}</td>
+      <td>{{ product.department }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.unit }}</td>
+      <td>{{ product.xFor }}</td>
+      <td>{{ product.cost }}</td>
+    </tr>
+  </table>
+</div>
