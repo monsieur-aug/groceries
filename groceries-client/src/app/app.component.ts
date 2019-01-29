@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Product } from './search-results/product.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ export class AppComponent {
 
   retrievedProducts : Product[];
 
-  constructor() {
+  constructor(private http : HttpClient) {
     let apples : any = {
       id: 321654,
       description: 'apples',
@@ -48,5 +49,10 @@ export class AppComponent {
     }; 
 
     this.retrievedProducts = [ apples, headacheMedicine, cereal ];
+  }
+
+  ngOnInit() {
+    let httpObservable = this.http.get('http://localhost:8080/groceries/api/products');
+    httpObservable.subscribe(() => console.log('Got a response!'));
   }
 }
