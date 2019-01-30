@@ -5,22 +5,38 @@
     <button id="more-options-button" type="button" (click)="toggleMoreSearchOptions()">{{ isMoreOptionsExpanded ? "Fewer Options" : "More Options" }}</button>
 
     <div *ngIf="isMoreOptionsExpanded">
-      <label for="id">Product ID</label>
-      <input type="text" id="id" name="id" [(ngModel)]="idField">
-      <label for="department">Department</label>
-      <input type="text" id="department" name="department" [(ngModel)]="departmentField">
-      <label for="price">Price</label>
-      <input type="text" id="price" name="price" [(ngModel)]="priceField">
-      <label for="lastSold">Last Sold Date</label>
-      <input type="text" id="lastSold" name="lastSold" [(ngModel)]="lastSoldField">
-      <label for="shelfLife">Shelf Life (days)</label>
-      <input type="text" id="shelfLife" name="shelfLife" [(ngModel)]="shelfLifeField">
-      <label for="unit">Unit</label>
-      <input type="text" id="unit" name="unit" [(ngModel)]="unitField">
-      <label for="xFor">xFor</label>
-      <input type="text" id="xFor" name="xFor" [(ngModel)]="xForField">
-      <label for="cost">Cost</label>
-      <input type="text" id="cost" name="cost" [(ngModel)]="costField">
+      <div>
+        <label for="id">Product ID:</label>
+        <input type="text" id="id" name="id" [(ngModel)]="idField">
+      </div>
+      <div>
+        <label for="department">Department:</label>
+        <input type="text" id="department" name="department" [(ngModel)]="departmentField">
+      </div>
+      <div>
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price" [(ngModel)]="priceField">
+      </div>
+      <div>
+        <label for="lastSold">Last Sold Date:</label>
+        <input type="date" id="lastSold" name="lastSold" [(ngModel)]="lastSoldField">
+      </div>
+      <div>
+        <label for="shelfLife">Shelf Life (days):</label>
+        <input type="text" id="shelfLife" name="shelfLife" [(ngModel)]="shelfLifeField">
+      </div>
+      <div>
+        <label for="unit">Unit:</label>
+        <input type="text" id="unit" name="unit" [(ngModel)]="unitField">
+      </div>
+      <div>
+        <label for="xFor">xFor:</label>
+        <input type="text" id="xFor" name="xFor" [(ngModel)]="xForField">
+      </div>
+      <div>
+        <label for="cost">Cost:</label>
+        <input type="text" id="cost" name="cost" [(ngModel)]="costField">
+      </div>
     </div>
 
     <button id="search-button" type="submit" (click)="findProducts()">Search</button>
