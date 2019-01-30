@@ -15,6 +15,11 @@ export class SearchComponent implements OnInit {
   idField : string;
   departmentField : string;
   priceField : string;
+  lastSoldField : string;
+  shelfLifeField : string;
+  unitField : string;
+  xForField : string;
+  costField : string;
 
   retrievedProducts : Product[];
 
@@ -45,6 +50,30 @@ export class SearchComponent implements OnInit {
       searchParams.append('priceMax', this.priceField);
     }
 
+    if (this.lastSoldField) {
+      searchParams.append('lastSoldDateFrom', this.lastSoldField);
+      searchParams.append('lastSoldDateUntil', this.lastSoldField);
+    }
+
+    if (this.shelfLifeField) {
+      searchParams.append('shelfLifeMin', this.shelfLifeField);
+      searchParams.append('shelfLifeMax', this.shelfLifeField);
+    }
+
+    if (this.unitField) {
+      searchParams.append('unit', this.unitField);
+    }
+
+    if (this.xForField) {
+      searchParams.append('xForMin', this.xForField);
+      searchParams.append('xForMax', this.xForField);
+    }
+
+    if (this.costField) {
+      searchParams.append('costMin', this.costField);
+      searchParams.append('costMax', this.costField);
+    }
+    
     return searchParams;
   }
 
