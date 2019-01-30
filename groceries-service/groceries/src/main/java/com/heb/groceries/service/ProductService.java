@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.heb.groceries.dao.ProductDAO;
@@ -44,8 +43,11 @@ public class ProductService {
 
 		final Long idAsLong = Long.parseLong(id);
 
-		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
-		retrievedProducts = Arrays.asList(productDAO.findProductWithId(idAsLong));
+		try {
+			retrievedProducts.add(getProductWithId(idAsLong));
+		} catch (DataNotFoundException dnfe) {
+			return retrievedProducts;
+		}
 
 		return retrievedProducts;
 	}
