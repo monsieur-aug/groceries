@@ -1,5 +1,2 @@
-# Exclude AllTests Suites
-exclude .*Tests, .*FunctionalTest
-
-# Exclude DB Initialization Test
-exclude com\.heb\.groceries\.dao\.*
+# Exclude AllTests Suites and DB initialization test
+exclude .*Tests, .*FunctionalTest, .*InitializerTest
