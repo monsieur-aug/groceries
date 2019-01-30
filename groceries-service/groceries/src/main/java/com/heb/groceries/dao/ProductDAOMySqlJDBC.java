@@ -26,7 +26,7 @@ import com.heb.groceries.model.ProductBuilder;
 
 public class ProductDAOMySqlJDBC implements ProductDAO {
 
-	private static final String	MYSQL_JDBC_URL_PREFIX				= "jdbc:mysql:";
+	/*private static final String	MYSQL_JDBC_URL_PREFIX				= "jdbc:mysql:";
 	private static final String	MYSQL_JDBC_DRIVER_QUALIFIED_NAME	= "com.mysql.cj.jdbc.Driver";
 
 	private static final String	DEFAULT_DATABASE_NAME				= "groceriesdb";
@@ -34,7 +34,7 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	private static final String	DEFAULT_DATABASE_URL				= MYSQL_JDBC_URL_PREFIX + "//localhost:3306/" + DEFAULT_DATABASE_NAME + "?useSSL=false";
 	private static final String	DEFAULT_CREDENTIALS_FILEPATH		= System.getProperty("user.home") + "/groceriesdb_creds.txt";
 	private static final String	DEFAULT_PRODUCTS_INVENTORY_FILEPATH	= System.getProperty("user.home") + "/products_inventory.txt";
-	private static final String	FIELD_SEPARATOR						= ",";
+	private static final String	FIELD_SEPARATOR						= ",";*/
 
 	private static final String	SQL_LIST_ALL						= "SELECT id, description, last_sold_date, shelf_life_days, department, price, unit, xfor, cost FROM Product";
 	private static final String	SQL_FIND_BY_ID						= SQL_LIST_ALL + " WHERE id = ?";
@@ -47,19 +47,24 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	private static final String	SQL_FIND_BY_COST					= SQL_LIST_ALL + " WHERE cost >= ? AND cost <= ?";
 	private static final String	SQL_FIND_BY_LAST_SOLD_DATE			= SQL_LIST_ALL + " WHERE last_sold_date >= ? AND last_sold_date <= ?";
 
-	private String databaseUrl;
-	private File credentialsFile;
+	//private String databaseUrl;
+	//private File credentialsFile;
+	private DAOFactory daoFactory;
 	
-	public ProductDAOMySqlJDBC() {
+	/*public ProductDAOMySqlJDBC() {
 		this(DEFAULT_DATABASE_URL, DEFAULT_CREDENTIALS_FILEPATH);
 	}
 	
 	public ProductDAOMySqlJDBC(final String databaseUrl, final String credentialsFilepath) {
 		setDatabaseUrl(databaseUrl);
 		setCredentialsFilepath(credentialsFilepath);
+	}*/
+	
+	public ProductDAOMySqlJDBC(final DAOFactory daoFactory) {
+		this.daoFactory = daoFactory;
 	}
 	
-	public void initialize() {
+	/*public void initialize() {
 		verifyDriverExists();
 		verifyDatabaseExists();
 		removeExistingInventory();
@@ -73,21 +78,21 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 
 	public String getCredentialsFilepath() {
 		return this.credentialsFile.getAbsolutePath();
-	}
+	}*/
 
 	@Override
 	public List<Product> listAllProducts() throws DAOException {
 		final List<Product> allProducts = new ArrayList<>();
 	
 		try (
-			final Connection connection = openConnection();
+			final Connection connection = this.daoFactory.getConnection();
 			final PreparedStatement statement = connection.prepareStatement(SQL_LIST_ALL);
 			final ResultSet resultSet = statement.executeQuery();
 		) {
 			while (resultSet.next()) {
 				allProducts.add(map(resultSet));
 			}
-		} catch (IOException | SQLException e) {
+		} catch (SQLException e) {
 			throw new DAOException(e);
 		}
 	
@@ -144,7 +149,7 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 		return list(SQL_FIND_BY_LAST_SOLD_DATE, dateRange);
 	}
 
-	private void verifyDriverExists() {
+	/*private void verifyDriverExists() {
 		try {
 			Class.forName(MYSQL_JDBC_DRIVER_QUALIFIED_NAME);
 		} catch (ClassNotFoundException cnfe) {
@@ -357,20 +362,20 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 	
 	private boolean isNotSupportedDatabaseUrl(final String url) {
 		return !(StringUtils.startsWith(url, MYSQL_JDBC_URL_PREFIX));
-	}
+	}*/
 	
 	private Product find(final String sqlQuery, Object... values) throws DAOException {
 		Product product = null;
 
 		try (
-			final Connection connection = openConnection();
+			final Connection connection = this.daoFactory.getConnection();
 			final PreparedStatement statement = prepareStatementWithValues(connection, sqlQuery, values);
 			final ResultSet resultSet = statement.executeQuery();
 		) {
 			if (resultSet.next()) {
 				product = map(resultSet);
 			}
-		} catch (IOException | SQLException e) {
+		} catch (SQLException e) {
 			throw new DAOException(e);
 		}
 
@@ -381,14 +386,14 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 		final List<Product> products = new ArrayList<>();
 
 		try (
-			final Connection connection = openConnection();
+			final Connection connection = this.daoFactory.getConnection();
 			final PreparedStatement statement = prepareStatementWithValues(connection, sql, values);
 			final ResultSet resultSet = statement.executeQuery();
 		) {
 			while (resultSet.next()) {
 				products.add(map(resultSet));
 			}
-		} catch (IOException | SQLException e) {
+		} catch (SQLException e) {
 			throw new DAOException(e);
 		}
 
