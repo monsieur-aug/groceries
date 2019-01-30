@@ -20,13 +20,13 @@ public enum QueryParam {
 	LAST_SOLD_DATE_END("lastSoldDateUntil")
 	;
 
-	public static List<String>	ALL_PARAMS	= new ArrayList<String>();
+	public static List<String>	ALL_PARAM_KEYS	= new ArrayList<String>();
 
 	private final String		key;
 
 	static {
 		for (final QueryParam param : values()) {
-			ALL_PARAMS.add(param.getKey());
+			ALL_PARAM_KEYS.add(param.getKey());
 		}
 	}
 	
