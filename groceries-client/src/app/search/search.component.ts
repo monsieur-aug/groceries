@@ -41,6 +41,10 @@ export class SearchComponent implements OnInit {
       searchParams.append('descriptionContains', this.descriptionField);
     }
 
+    if (this.idField) {
+      searchParams.append('id', this.idField);
+    }
+    
     if (this.departmentField) {
       searchParams.append('department', this.departmentField);
     }
