@@ -104,7 +104,7 @@ public class ProductResource {
 
 	private boolean isQuerySupported(final MultivaluedMap<String, String> queryParams) {
 		for (final String queryParam : queryParams.keySet()) {
-			if (!QueryParam.ALL_PARAMS.contains(queryParam)) {
+			if (!QueryParam.ALL_PARAM_KEYS.contains(queryParam)) {
 				return false;
 			}
 		}

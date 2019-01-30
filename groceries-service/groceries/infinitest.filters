@@ -1,2 +1,2 @@
-# Exclude AllTests Suites
-exclude .*Tests, .*FunctionalTest
+# Exclude AllTests Suites and DB initialization test
+exclude .*Tests, .*FunctionalTest, .*InitializerTest
