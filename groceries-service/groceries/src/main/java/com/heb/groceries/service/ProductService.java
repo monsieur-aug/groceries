@@ -21,7 +21,7 @@ public class ProductService {
 		return allProducts;
 	}
 
-	public Product findProductWithId(final long id) {
+	public Product getProductWithId(final long id) {
 		Product retrievedProduct = null;
 
 		throwClientInputInvalidExceptionIfInvalidId(id);
@@ -34,6 +34,22 @@ public class ProductService {
 		}
 
 		return retrievedProduct;
+	}
+
+	public List<Product> findProductsWithId(final String id) {
+		List<Product> retrievedProducts = new ArrayList<>();
+
+		throwClientInputInvalidExceptionIfInvalidId(id);
+
+		final Long idAsLong = Long.parseLong(id);
+
+		try {
+			retrievedProducts.add(getProductWithId(idAsLong));
+		} catch (DataNotFoundException dnfe) {
+			return retrievedProducts;
+		}
+
+		return retrievedProducts;
 	}
 
 	public List<Product> findProductsWithDescription(final String description) {
@@ -143,6 +159,19 @@ public class ProductService {
 		try {
 			final Product idValidationProduct = new Product();
 			idValidationProduct.setId(id);
+		} catch (IllegalArgumentException iae) {
+			throw new ClientInputInvalidException(iae.getMessage());
+		}
+	}
+
+	private void throwClientInputInvalidExceptionIfInvalidId(final String id) {
+		try {
+			final Long idAsLong = Long.parseLong(id);
+
+			final Product idValidationProduct = new Product();
+			idValidationProduct.setId(idAsLong);
+		} catch (NumberFormatException nfe) {
+			throw new ClientInputInvalidException("The id must be a whole number.");
 		} catch (IllegalArgumentException iae) {
 			throw new ClientInputInvalidException(iae.getMessage());
 		}

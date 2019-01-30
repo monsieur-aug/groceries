@@ -76,6 +76,10 @@ public class ProductResource {
 			if (isGetProductsByLastSoldDate(queryParams)) {
 				retrievedProducts = merge(retrievedProducts, getProductsByLastSoldDate(queryParams));
 			}
+
+			if (isGetProductsById(queryParams)) {
+				retrievedProducts = merge(retrievedProducts, getProductsById(queryParams));
+			}
 		} else {
 			throw new UnsupportedQueryException("The provided query param combination is invalid.");
 		}
@@ -87,7 +91,7 @@ public class ProductResource {
 	@Path("/{product-id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Product getProductById(@PathParam("product-id") final long id) {
-		return this.service.findProductWithId(id);
+		return this.service.getProductWithId(id);
 	}
 
 	private void setService(final ProductService service) {
@@ -97,15 +101,19 @@ public class ProductResource {
 
 		this.service = service;
 	}
-	
+
 	private boolean isQuerySupported(final MultivaluedMap<String, String> queryParams) {
 		for (final String queryParam : queryParams.keySet()) {
 			if (!QueryParam.ALL_PARAMS.contains(queryParam)) {
 				return false;
 			}
 		}
-		
+
 		return true;
+	}
+
+	private boolean isGetProductsById(final MultivaluedMap<String, String> queryParams) {
+		return queryParams.containsKey(QueryParam.ID.toString());
 	}
 
 	private boolean isGetProductsByDescription(final MultivaluedMap<String, String> queryParams) {
@@ -173,6 +181,14 @@ public class ProductResource {
 		}
 
 		return containsLastSoldDateStart && containsLastSoldDateEnd;
+	}
+
+	private List<Product> getProductsById(final MultivaluedMap<String, String> queryParams) {
+		final String id = queryParams.getFirst(QueryParam.ID.toString());
+
+		final List<Product> retrievedProducts = this.service.findProductsWithId(id);
+
+		return retrievedProducts;
 	}
 
 	private List<Product> getProductsByDescription(final MultivaluedMap<String, String> queryParams) {
