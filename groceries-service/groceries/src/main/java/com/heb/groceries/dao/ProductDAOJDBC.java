@@ -13,7 +13,7 @@ import com.heb.groceries.dao.exception.DAOException;
 import com.heb.groceries.model.Product;
 import com.heb.groceries.model.ProductBuilder;
 
-public class ProductDAOMySqlJDBC implements ProductDAO {
+public class ProductDAOJDBC implements ProductDAO {
 
 	private static final String	SQL_LIST_ALL				= "SELECT id, description, last_sold_date, shelf_life_days, department, price, unit, xfor, cost FROM Product";
 	private static final String	SQL_FIND_BY_ID				= SQL_LIST_ALL + " WHERE id = ?";
@@ -28,7 +28,7 @@ public class ProductDAOMySqlJDBC implements ProductDAO {
 
 	private DAOFactory			daoFactory;
 
-	public ProductDAOMySqlJDBC(final DAOFactory daoFactory) {
+	public ProductDAOJDBC(final DAOFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
 

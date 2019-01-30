@@ -46,7 +46,7 @@ public abstract class DAOFactory {
 	abstract Connection getConnection() throws SQLException;
 
 	public ProductDAO getProductDAO() {
-		return new ProductDAOMySqlJDBC(this);
+		return new ProductDAOJDBC(this);
 	}
 }
 
