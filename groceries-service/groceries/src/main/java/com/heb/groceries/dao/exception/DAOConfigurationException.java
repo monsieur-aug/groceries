@@ -7,9 +7,13 @@ public class DAOConfigurationException extends RuntimeException {
 	public DAOConfigurationException(final String message) {
 		super(message);
 	}
-	
+
 	public DAOConfigurationException(final Throwable throwable) {
 		super(throwable);
+	}
+
+	public DAOConfigurationException(final String message, final Throwable throwable) {
+		super(message, throwable);
 	}
 
 }
