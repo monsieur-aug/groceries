@@ -28,6 +28,5 @@ input:focus, textarea:focus {
 
 button {
     display: block;
-    margin-left: .5em;
-    margin-top: .5em;
+    margin: 1em 0 2em .5em;
 }
