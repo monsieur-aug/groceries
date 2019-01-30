@@ -17,14 +17,14 @@
 
     <tr *ngFor="let product of products">
       <td>{{ product.id }}</td>
-      <td>{{ product.description }}</td>
+      <td>{{ toTitleCase(product.description) }}</td>
       <td>{{ product.lastSold }}</td>
       <td>{{ product.shelfLifeDays }}</td>
       <td>{{ product.department }}</td>
-      <td>{{ product.price }}</td>
+      <td>{{ product.price.toFixed(2) }}</td>
       <td>{{ product.unit }}</td>
       <td>{{ product.XFor }}</td>
-      <td>{{ product.cost }}</td>
+      <td>{{ product.cost.toFixed(2) }}</td>
     </tr>
   </table>
 </div>
