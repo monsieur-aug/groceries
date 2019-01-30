@@ -29,7 +29,8 @@ public class GroceriesDBInitializer {
 					+ "price DOUBLE NOT NULL,"
 					+ "unit VARCHAR(16) NOT NULL,"
 					+ "xfor INT NOT NULL,"
-					+ "cost DOUBLE NOT NULL)";
+					+ "cost DOUBLE NOT NULL,"
+					+ "UNIQUE(id))";
 	private static final String SQL_TEMPLATE_POPULATE_PRODUCT_TABLE = "INSERT INTO " + PRODUCT_TABLE_NAME 
 					+ " (id, description, last_sold_date, shelf_life_days, department, price, unit, xfor, cost)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
