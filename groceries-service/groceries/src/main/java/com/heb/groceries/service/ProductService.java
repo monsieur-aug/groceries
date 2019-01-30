@@ -6,17 +6,53 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.heb.groceries.dao.DAOFactory;
 import com.heb.groceries.dao.ProductDAO;
-import com.heb.groceries.dao.ProductDAOMySqlJDBC;
 import com.heb.groceries.exception.ClientInputInvalidException;
 import com.heb.groceries.exception.DataNotFoundException;
 import com.heb.groceries.model.Product;
 
 public class ProductService {
 
+	private static final String	DEFAULT_DATABASE_NAME	= "groceriesdb.jdbc";
+
+	private String				databaseName;
+	private ProductDAO			dao;
+
+	public ProductService() {
+		this(DEFAULT_DATABASE_NAME);
+	}
+
+	public ProductService(final String databaseName) {
+		setDatabaseName(databaseName);
+		setDAO(databaseName);
+	}
+
+	public String getDatabaseName() {
+		return this.databaseName;
+	}
+
+	public void setDatabaseName(final String databaseName) {
+		if (StringUtils.isBlank(databaseName)) {
+			throw new IllegalArgumentException();
+		}
+
+		this.databaseName = databaseName;
+	}
+
+	public ProductDAO getDAO() {
+		return this.dao;
+	}
+
+	public void setDAO(final String databaseName) {
+		final DAOFactory factory = DAOFactory.getInstance(databaseName);
+		this.dao = factory.getProductDAO();
+	}
+
 	public List<Product> getAllProducts() {
-		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
-		final List<Product> allProducts = productDAO.listAllProducts();
+		final List<Product> allProducts = this.dao.listAllProducts();
 
 		return allProducts;
 	}
@@ -26,8 +62,7 @@ public class ProductService {
 
 		throwClientInputInvalidExceptionIfInvalidId(id);
 
-		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
-		retrievedProduct = productDAO.findProductWithId(id);
+		retrievedProduct = this.dao.findProductWithId(id);
 
 		if (retrievedProduct == null) {
 			throw new DataNotFoundException("Product with id " + id + " was not found.");
@@ -57,8 +92,7 @@ public class ProductService {
 
 		throwClientInputInvalidExceptionIfInvalidDescription(description);
 
-		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
-		retrievedProducts = productDAO.findProductsWithDescription(description);
+		retrievedProducts = this.dao.findProductsWithDescription(description);
 
 		return retrievedProducts;
 	}
@@ -68,8 +102,7 @@ public class ProductService {
 
 		throwClientInputInvalidExceptionIfInvalidDepartment(department);
 
-		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
-		retrievedProducts = productDAO.findProductsWithDepartment(department);
+		retrievedProducts = this.dao.findProductsWithDepartment(department);
 
 		return retrievedProducts;
 	}
@@ -82,8 +115,7 @@ public class ProductService {
 		final Integer min = Integer.parseInt(minimum);
 		final Integer max = Integer.parseInt(maximum);
 
-		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
-		retrievedProducts = productDAO.findProductsWithShelfLife(min, max);
+		retrievedProducts = this.dao.findProductsWithShelfLife(min, max);
 
 		return retrievedProducts;
 	}
@@ -93,8 +125,7 @@ public class ProductService {
 
 		throwClientInputInvalidExceptionIfInvalidUnit(unit);
 
-		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
-		retrievedProducts = productDAO.findProductsWithUnit(unit);
+		retrievedProducts = this.dao.findProductsWithUnit(unit);
 
 		return retrievedProducts;
 	}
@@ -107,8 +138,7 @@ public class ProductService {
 		final Integer min = Integer.parseInt(minimum);
 		final Integer max = Integer.parseInt(maximum);
 
-		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
-		retrievedProducts = productDAO.findProductsWithXFor(min, max);
+		retrievedProducts = this.dao.findProductsWithXFor(min, max);
 
 		return retrievedProducts;
 	}
@@ -121,8 +151,7 @@ public class ProductService {
 		final BigDecimal min = new BigDecimal(minimum);
 		final BigDecimal max = new BigDecimal(maximum);
 
-		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
-		retrievedProducts = productDAO.findProductsWithPrice(min, max);
+		retrievedProducts = this.dao.findProductsWithPrice(min, max);
 
 		return retrievedProducts;
 	}
@@ -135,8 +164,7 @@ public class ProductService {
 		final BigDecimal min = new BigDecimal(minimum);
 		final BigDecimal max = new BigDecimal(maximum);
 
-		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
-		retrievedProducts = productDAO.findProductsWithCost(min, max);
+		retrievedProducts = this.dao.findProductsWithCost(min, max);
 
 		return retrievedProducts;
 	}
@@ -149,8 +177,7 @@ public class ProductService {
 		final LocalDate start = LocalDate.parse(startDate);
 		final LocalDate end = LocalDate.parse(endDate);
 
-		final ProductDAO productDAO = new ProductDAOMySqlJDBC();
-		retrievedProducts = productDAO.findProductsWithLastSoldDate(start, end);
+		retrievedProducts = this.dao.findProductsWithLastSoldDate(start, end);
 
 		return retrievedProducts;
 	}
