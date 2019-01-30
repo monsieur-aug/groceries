@@ -9,6 +9,8 @@ import { Product } from '../search-results/product.model';
 })
 export class SearchComponent implements OnInit {
 
+  productsEnpoint : string = 'http://localhost:8080/groceries/api/products';
+
   isMoreOptionsExpanded : boolean = false;
 
   descriptionField : string;
@@ -37,6 +39,8 @@ export class SearchComponent implements OnInit {
   buildSearchParams() : URLSearchParams {
     let searchParams = new URLSearchParams();
 
+    this.trimAllFields();
+
     if (this.descriptionField) {
       searchParams.append('descriptionContains', this.descriptionField);
     }
@@ -50,8 +54,13 @@ export class SearchComponent implements OnInit {
     }
 
     if (this.priceField) {
-      searchParams.append('priceMin', this.priceField);
-      searchParams.append('priceMax', this.priceField);
+      let priceMin : string;
+      let priceMax : string;
+      
+      [priceMin, priceMax] = this.getMinAndMax(this.priceField);
+
+      searchParams.append('priceMin', priceMin);
+      searchParams.append('priceMax', priceMax);
     }
 
     if (this.lastSoldField) {
@@ -60,8 +69,13 @@ export class SearchComponent implements OnInit {
     }
 
     if (this.shelfLifeField) {
-      searchParams.append('shelfLifeMin', this.shelfLifeField);
-      searchParams.append('shelfLifeMax', this.shelfLifeField);
+      let shelfLifeMin : string;
+      let shelfLifeMax : string;
+
+      [shelfLifeMin, shelfLifeMax] = this.getMinAndMax(this.shelfLifeField);
+
+      searchParams.append('shelfLifeMin', shelfLifeMin);
+      searchParams.append('shelfLifeMax', shelfLifeMax);
     }
 
     if (this.unitField) {
@@ -69,21 +83,53 @@ export class SearchComponent implements OnInit {
     }
 
     if (this.xForField) {
-      searchParams.append('xForMin', this.xForField);
-      searchParams.append('xForMax', this.xForField);
+      let xForMin : string;
+      let xForMax : string;
+
+      [xForMin, xForMax] = this.getMinAndMax(this.xForField);
+
+      searchParams.append('xForMin', xForMin);
+      searchParams.append('xForMax', xForMax);
     }
 
     if (this.costField) {
-      searchParams.append('costMin', this.costField);
-      searchParams.append('costMax', this.costField);
+      let costMin : string;
+      let costMax : string;
+
+      [costMin, costMax] = this.getMinAndMax(this.costField);
+
+      searchParams.append('costMin', costMin);
+      searchParams.append('costMax', costMax);
     }
     
     return searchParams;
   }
 
+  trimAllFields() {
+    if (this.descriptionField) { this.descriptionField = this.descriptionField.trim(); }
+    if (this.idField) { this.idField = this.idField.trim(); }
+    if (this.departmentField) { this.departmentField = this.departmentField.trim(); }
+    if (this.priceField) { this.priceField = this.priceField.trim(); }
+    if (this.lastSoldField) { this.lastSoldField = this.lastSoldField.trim(); }
+    if (this.shelfLifeField) { this.shelfLifeField = this.shelfLifeField.trim(); }
+    if (this.unitField) { this.unitField = this.unitField.trim(); }
+    if (this.xForField) { this.xForField = this.xForField.trim(); }
+    if (this.costField) { this.costField = this.costField.trim(); }
+  }
+
+  getMinAndMax(range : string) {
+    let normalizedRange = range.replace(/ /gi, '');
+
+    if (normalizedRange.indexOf('-') != -1) {
+      return [normalizedRange.split('-')[0], normalizedRange.split('-')[1]];
+    }
+
+    return [normalizedRange, normalizedRange];
+  }
+
   findProducts() {
     let searchParams : URLSearchParams = this.buildSearchParams();
-    let searchUrl = new URL('http://localhost:8080/groceries/api/products'.concat('?', searchParams.toString()));
+    let searchUrl = new URL(this.productsEnpoint.concat('?', searchParams.toString()));
 
     console.log('contacting ' + searchUrl.toString());
     this.http.get(searchUrl.toString()).subscribe((response) => this.handleResponse(response));
