@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum QueryParam {
+	ID("id"),
 	DESCRIPTION("descriptionContains"),
 	DEPARTMENT("department"),
 	SHELF_LIFE_DAYS_MIN("shelfLifeMin"),
