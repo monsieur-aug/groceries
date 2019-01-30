@@ -1,11 +1,11 @@
 export class Product {
     id: number;
     description: string;
-    lastSoldDate: string;
+    lastSold: string;
     shelfLifeDays: number;
     department: string;
     price: number;
     unit: string;
-    xFor: number;
+    XFor: number;
     cost: number;
 }

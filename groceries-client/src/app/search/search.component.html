@@ -11,8 +11,20 @@
       <input type="text" id="department" name="department" [(ngModel)]="departmentField">
       <label for="price">Price</label>
       <input type="text" id="price" name="price" [(ngModel)]="priceField">
+      <label for="lastSold">Last Sold Date</label>
+      <input type="text" id="lastSold" name="lastSold" [(ngModel)]="lastSoldField">
+      <label for="shelfLife">Shelf Life (days)</label>
+      <input type="text" id="shelfLife" name="shelfLife" [(ngModel)]="shelfLifeField">
+      <label for="unit">Unit</label>
+      <input type="text" id="unit" name="unit" [(ngModel)]="unitField">
+      <label for="xFor">xFor</label>
+      <input type="text" id="xFor" name="xFor" [(ngModel)]="xForField">
+      <label for="cost">Cost</label>
+      <input type="text" id="cost" name="cost" [(ngModel)]="costField">
     </div>
 
-    <button id="search-button" type="submit">Search</button>
+    <button id="search-button" type="submit" (click)="findProducts()">Search</button>
   </form>
 </div>
+
+<app-search-results [productsToDisplay]="retrievedProducts"></app-search-results>

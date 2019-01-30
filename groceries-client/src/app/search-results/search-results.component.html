@@ -1,4 +1,7 @@
 <div>
+  <p *ngIf="products" id="search-summary">
+    {{ products.length }} {{ products.length === 1 ? "product" : "products" }} found
+  </p>
   <table *ngIf="products" style="width:100%">
     <tr>
       <th>ID</th>
@@ -15,12 +18,12 @@
     <tr *ngFor="let product of products">
       <td>{{ product.id }}</td>
       <td>{{ product.description }}</td>
-      <td>{{ product.lastSoldDate }}</td>
+      <td>{{ product.lastSold }}</td>
       <td>{{ product.shelfLifeDays }}</td>
       <td>{{ product.department }}</td>
       <td>{{ product.price }}</td>
       <td>{{ product.unit }}</td>
-      <td>{{ product.xFor }}</td>
+      <td>{{ product.XFor }}</td>
       <td>{{ product.cost }}</td>
     </tr>
   </table>
