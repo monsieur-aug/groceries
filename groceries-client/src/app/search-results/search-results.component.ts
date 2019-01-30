@@ -17,4 +17,13 @@ export class SearchResultsComponent implements OnInit {
   ngOnInit() {
   }
 
+  toTitleCase(unformattedString : string) {
+    let formattedString = unformattedString.toLowerCase().split(' ');
+
+    for (var i = 0; i < formattedString.length; i++) {
+      formattedString[i] = formattedString[i].charAt(0).toUpperCase() + formattedString[i].slice(1); 
+    }
+
+    return formattedString.join(' ');
+  }
 }
