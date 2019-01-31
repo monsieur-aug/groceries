@@ -1,8 +1,7 @@
 <html>
 <body>
-    <h2>Jersey RESTful Web Application!</h2>
-    <p><a href="webapi/myresource">Jersey resource</a>
-    <p>Visit <a href="http://jersey.java.net">Project Jersey website</a>
-    for more information on Jersey!
+    <h2>H-E-B Developer II Coding Challenge</h2>
+    <p>The Groceries service exposes a Products resource, which can be reached at: <a href="/groceries/api/products">/groceries/api/products</a></p>
+    <p>Visit the <a href="https://github.com/monsieur-aug/groceries">project repository on GitHub</a> for details</p>
 </body>
 </html>
