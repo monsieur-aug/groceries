@@ -14,6 +14,9 @@ import com.heb.groceries.exception.ClientInputInvalidException;
 import com.heb.groceries.exception.DataNotFoundException;
 import com.heb.groceries.model.Product;
 
+/**
+ * Services requests for products based on various attributes.
+ */
 public class ProductService {
 
 	private static final String	DEFAULT_DATABASE_NAME	= "groceriesdb.jdbc";
@@ -25,6 +28,13 @@ public class ProductService {
 		this(DEFAULT_DATABASE_NAME);
 	}
 
+	/**
+	 * Returns and instance of the service that will use the specified database
+	 * 
+	 * @see com.heb.groceries.dao.DAOProperties
+	 * @param databaseName the name of the database as specified in the DAO config
+	 *                     file
+	 */
 	public ProductService(final String databaseName) {
 		setDatabaseName(databaseName);
 		setDAO(databaseName);
@@ -51,12 +61,26 @@ public class ProductService {
 		this.dao = factory.getProductDAO();
 	}
 
+	/**
+	 * Retrieves a list of all products maintained by the service
+	 * 
+	 * @return a list of all products
+	 */
 	public List<Product> getAllProducts() {
 		final List<Product> allProducts = this.dao.listAllProducts();
 
 		return allProducts;
 	}
 
+	/**
+	 * Retrieves a product with the specified id. Throws a
+	 * <code>ClientInputInvalidException</code> if the specified id is invalid.
+	 * Throws a <code>DataNotFoundException</code> if the product was not found.
+	 * This method assumes that the product exists.
+	 * 
+	 * @param id the product id
+	 * @return the product with the specified id
+	 */
 	public Product getProductWithId(final long id) {
 		Product retrievedProduct = null;
 
@@ -71,6 +95,14 @@ public class ProductService {
 		return retrievedProduct;
 	}
 
+	/**
+	 * Retrieves products with the specified id.Throws a
+	 * <code>ClientInputInvalidException</code> if the specified id is invalid. This
+	 * method **does not** assume that the product exists.
+	 * 
+	 * @param id the product id
+	 * @return a list of products with the specified id; may be empty
+	 */
 	public List<Product> findProductsWithId(final String id) {
 		List<Product> retrievedProducts = new ArrayList<>();
 
@@ -87,6 +119,14 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	/**
+	 * Retrieves products with the a description similar to the specified
+	 * description. Throws a <code>ClientInputInvalidException</code> if the
+	 * specified description is invalid.
+	 * 
+	 * @param description the product description
+	 * @return a list of products with a similar description; may be empty
+	 */
 	public List<Product> findProductsWithDescription(final String description) {
 		List<Product> retrievedProducts = new ArrayList<>();
 
@@ -97,6 +137,14 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	/**
+	 * Retrieves products with the specified department. Throws a
+	 * <code>ClientInputInvalidException</code> if the specified department is
+	 * invalid.
+	 * 
+	 * @param department a product department
+	 * @return a list of products that have the specified department; may be empty
+	 */
 	public List<Product> findProductsWithDepartment(final String department) {
 		List<Product> retrievedProducts = new ArrayList<>();
 
@@ -107,6 +155,16 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	/**
+	 * Retrieves products with a shelf life that exists within the specified range
+	 * of shelf life days (inclusive). Throws a
+	 * <code>ClientInputInvalidException</code> if the range is invalid.
+	 * 
+	 * @param minimum the minimum shelf life
+	 * @param maximum the maximum shelf life
+	 * @return a list of products that have a shelf life within the specified range;
+	 *         may be empty
+	 */
 	public List<Product> findProductsWithShelfLifeDays(final String minimum, final String maximum) {
 		List<Product> retrievedProducts = new ArrayList<>();
 
@@ -120,6 +178,13 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	/**
+	 * Retrieves products with the specified unit. Throws a
+	 * <code>ClientInputInvalidException</code> if the unit is invalid.
+	 * 
+	 * @param unit the product unit
+	 * @return a list of products that have the specified unit; may be empty
+	 */
 	public List<Product> findProductsWithUnit(final String unit) {
 		List<Product> retrievedProducts = new ArrayList<>();
 
@@ -130,6 +195,16 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	/**
+	 * Retrieves products with an xFor factor that exists within the specified range
+	 * (inclusive). Throws a <code>ClientInputInvalidException</code> if the range
+	 * is invalid.
+	 * 
+	 * @param minimum the minimum xFor factor
+	 * @param maximum the maximum xFor factor
+	 * @return a list of products that have an xFor factor within the specified
+	 *         range; may be empty
+	 */
 	public List<Product> findProductsWithXFor(final String minimum, final String maximum) {
 		List<Product> retrievedProducts = new ArrayList<>();
 
@@ -143,6 +218,16 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	/**
+	 * Retrieves products with a price that exists within the specified range
+	 * (inclusive). Throws a <code>ClientInputInvalidException</code> if the range
+	 * is invalid.
+	 * 
+	 * @param minimum the minimum price
+	 * @param maximum the maximum price
+	 * @return a list of products that have a price within the specified range; may
+	 *         be empty
+	 */
 	public List<Product> findProductsWithPrice(final String minimum, final String maximum) {
 		List<Product> retrievedProducts = new ArrayList<>();
 
@@ -156,6 +241,16 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	/**
+	 * Retrieves products with a cost that exists within the specified range
+	 * (inclusive). Throws a <code>ClientInputInvalidException</code> if the range
+	 * is invalid.
+	 * 
+	 * @param minimum the minimum cost
+	 * @param maximum the maximum cost
+	 * @return a list of products that have a cost within the specified range; may
+	 *         be empty
+	 */
 	public List<Product> findProductsWithCost(final String minimum, final String maximum) {
 		List<Product> retrievedProducts = new ArrayList<>();
 
@@ -169,6 +264,16 @@ public class ProductService {
 		return retrievedProducts;
 	}
 
+	/**
+	 * Retrieves products with a last sold date within the specified range
+	 * (inclusive). Throws a <code>ClientInputInvalidException</code> if the range
+	 * is invalid.
+	 * 
+	 * @param startDate a starting date in the format YYYY-MM-DD
+	 * @param endDate   an ending date in the format YYYY-MM-DD
+	 * @return a list of products that have a last sold date within the specified
+	 *         range; may be empty
+	 */
 	public List<Product> findProductsWithLastSoldDate(final String startDate, final String endDate) {
 		List<Product> retrievedProducts = new ArrayList<>();
 

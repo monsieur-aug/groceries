@@ -1,5 +1,9 @@
 package com.heb.groceries.model;
 
+/**
+ * Represents an error response that can be returned by the service, usually by
+ * an exception mapper.
+ */
 public class ErrorResponse {
 
 	private int		errorCode;

@@ -19,6 +19,13 @@ import com.heb.groceries.model.Product;
 import com.heb.groceries.resource.query.QueryParam;
 import com.heb.groceries.service.ProductService;
 
+/**
+ * Represents the entry-point for the service; manages all requests directed to
+ * the <code>/products</code> resource. This class (1) identifies the type of
+ * request it received; (2) extracts query attributes and path parameters if
+ * supplied; and (3) calls the appropriate service method to handle the request.
+ *
+ */
 @Path("products")
 public class ProductResource {
 
@@ -28,6 +35,11 @@ public class ProductResource {
 		this(new ProductService());
 	}
 
+	/**
+	 * Creates a new instance of the resource class with the specified service
+	 * 
+	 * @param service the service that will be relied on to fulfill requests
+	 */
 	public ProductResource(final ProductService service) {
 		setService(service);
 	}
@@ -36,6 +48,18 @@ public class ProductResource {
 		return this.service;
 	}
 
+	/**
+	 * Triggers when a request is received at the <code>/products</code> endpoint.
+	 * Throws and <code>UnsupportedQueryException</code> if the specified query
+	 * parameter combination is invalid.
+	 * 
+	 * @see com.heb.groceries.resource.query.QueryParam
+	 * @param uriInfo URI contextual information; in particular, the query
+	 *                parameters
+	 * @return a list of products that match the criteria specified in the query
+	 *         parameters, if any; or a list of all products maintained by the
+	 *         service
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Product> getProducts(@Context final UriInfo uriInfo) {
@@ -87,6 +111,14 @@ public class ProductResource {
 		return retrievedProducts;
 	}
 
+	/**
+	 * Triggers when a request is received at the
+	 * <code>/products/{product-id}</code> endpoint. Retrieves the product with the
+	 * specified product id if it exists.
+	 * 
+	 * @param id the id of the requested product
+	 * @return the product with the specified id
+	 */
 	@GET
 	@Path("/{product-id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -260,6 +292,14 @@ public class ProductResource {
 		return retrievedProducts;
 	}
 
+	/**
+	 * Creates a list of products that contains the intersection of the specified
+	 * lists if and only if both provided lists are not empty.
+	 * 
+	 * @param original   the first list of products
+	 * @param additional the second list of products
+	 * @return a new list of products that are common to the provided lists
+	 */
 	private List<Product> merge(final List<Product> original, final List<Product> additional) {
 		if (original == null) {
 			return additional;

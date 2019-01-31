@@ -8,6 +8,10 @@ import javax.ws.rs.ext.Provider;
 
 import com.heb.groceries.model.ErrorResponse;
 
+/**
+ * Maps a {@link com.heb.groceries.exception.DataNotFoundException} to a
+ * response.
+ */
 @Provider
 public class DataNotFoundExceptionMapper implements ExceptionMapper<DataNotFoundException> {
 
