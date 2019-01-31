@@ -11,6 +11,18 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.heb.groceries.dao.exception.DAOConfigurationException;
 
+/**
+ * Reads the datastore properties from the specified file using the supplied key
+ * prefix. Entries in the file look similar to:
+ * 
+ * <pre>
+ * groceriesdb.jdbc.driver = com.mysql.cj.jdbc.Driver
+ * </pre>
+ * 
+ * where groceriesdb.jdbc represents the key prefix that must be supplied by the
+ * dependent class.
+ * 
+ */
 public class DAOProperties {
 
 	private static final String		PROPERTIES_FILENAME	= "dao.properties";
@@ -36,6 +48,15 @@ public class DAOProperties {
 
 	private String keyPrefix;
 
+	/**
+	 * Creates a new instance of a datastore properties object using the specified
+	 * key prefix
+	 * 
+	 * @param keyPrefix the prefix which identifies the properties for the DAO of
+	 *                  interest
+	 * @throws DAOConfigurationException if the specified prefix is null, blank, or
+	 *                                   empty
+	 */
 	public DAOProperties(final String keyPrefix) throws DAOConfigurationException {
 		if (StringUtils.isBlank(keyPrefix)) {
 			throw new DAOConfigurationException("The key prefix may not be null, blank, or empty.");
@@ -44,7 +65,13 @@ public class DAOProperties {
 		this.keyPrefix = keyPrefix;
 	}
 
-	public String getProperty(final String propertyName) throws DAOConfigurationException {
+	/**
+	 * Reads the requested property from the properties file
+	 * 
+	 * @param propertyName the name of the property to read
+	 * @return the value associated with the named property in the properties file
+	 */
+	public String getProperty(final String propertyName) {
 		final String fullPropertyKey = keyPrefix + "." + propertyName;
 		String propertyValue = PROPERTIES.getProperty(fullPropertyKey);
 

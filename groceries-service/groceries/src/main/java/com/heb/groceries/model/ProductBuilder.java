@@ -5,6 +5,10 @@ import java.time.LocalDate;
 
 import com.heb.groceries.error.Error;
 
+/**
+ * Builds a <code>Product</code> object and enforces the presence of all
+ * mandatory fields.
+ */
 public class ProductBuilder {
 
 	private Product product;
@@ -13,6 +17,12 @@ public class ProductBuilder {
 		this.product = new Product();
 	}
 
+	/**
+	 * Builds the product. Throws an <cod>IllegalStateException</code> if one or
+	 * more mandatory attributes are not set.
+	 * 
+	 * @return a <code>Product</code> instance with the specified attributes
+	 */
 	public Product build() {
 		if (isSet(this.product.getId()) && isSet(this.product.getDescription()) && isSet(this.product.getLastSold()) && isSet(this.product.getShelfLifeDays())
 						&& isSet(this.product.getDepartment()) && isSet(this.product.getPrice()) && isSet(this.product.getUnit())

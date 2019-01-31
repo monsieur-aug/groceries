@@ -1,5 +1,9 @@
 package com.heb.groceries.dao.exception;
 
+/**
+ * Represents an unrecoverable error with the data access object (DAO)
+ * configuration.
+ */
 public class DAOConfigurationException extends RuntimeException {
 
 	private static final long serialVersionUID = 1222348534190870382L;

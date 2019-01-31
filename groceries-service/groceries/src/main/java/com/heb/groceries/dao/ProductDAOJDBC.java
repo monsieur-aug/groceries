@@ -13,6 +13,9 @@ import com.heb.groceries.dao.exception.DAOException;
 import com.heb.groceries.model.Product;
 import com.heb.groceries.model.ProductBuilder;
 
+/**
+ * Represents an JDBC-based implementation of a data access object for <code>Product</code>s
+ */
 public class ProductDAOJDBC implements ProductDAO {
 
 	private static final String	SQL_LIST_ALL				= "SELECT id, description, last_sold_date, shelf_life_days, department, price, unit, xfor, cost FROM Product";

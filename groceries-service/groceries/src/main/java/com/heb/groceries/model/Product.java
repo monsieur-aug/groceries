@@ -9,6 +9,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.heb.groceries.error.Error;
 
+/**
+ * Represents a product in the inventory.
+ */
 public class Product implements Serializable {
 
 	private static final long	serialVersionUID	= 709110542198236024L;
@@ -31,6 +34,12 @@ public class Product implements Serializable {
 		return this.id;
 	}
 
+	/**
+	 * Sets the product id. Throws an <code>IllegalArgumentException</code> if the
+	 * id is null, negative or zero.
+	 * 
+	 * @param id the product id
+	 */
 	public void setId(final Long id) {
 		if (id == null) {
 			throw new IllegalArgumentException(Error.PRODUCT_ID_NULL.toString());
@@ -47,6 +56,13 @@ public class Product implements Serializable {
 		return this.description;
 	}
 
+	/**
+	 * Sets the product description. Throws an <code>IllegalArgumentException</code>
+	 * if the description is null; blank; empty; or contains characters other than
+	 * letters and spaces.
+	 * 
+	 * @param description the product description
+	 */
 	public void setDescription(final String description) {
 		if (StringUtils.isBlank(description)) {
 			throw new IllegalArgumentException(Error.PRODUCT_DESCRIPTION_NULL_BLANK_EMPTY.toString());
@@ -63,6 +79,12 @@ public class Product implements Serializable {
 		return this.lastSold;
 	}
 
+	/**
+	 * Sets the product's last sold date. Throws an
+	 * <code>IllegalArgumentException</code> if the date is null.
+	 * 
+	 * @param lastSold the date the product was last sold
+	 */
 	public void setLastSold(final LocalDate lastSold) {
 		if (lastSold == null) {
 			throw new IllegalArgumentException(Error.PRODUCT_LAST_SOLD_DATE_NULL.toString());
@@ -75,6 +97,14 @@ public class Product implements Serializable {
 		return this.shelfLifeDays;
 	}
 
+	/**
+	 * Sets the product's shelf life, represented by a number of days. Throws an
+	 * <code>IllegalArgumentException</code> if the number of days is null,
+	 * negative, or zero.
+	 * 
+	 * @param numberOfDays the product's shelf life expressed as a whole number of
+	 *                     days
+	 */
 	public void setShelfLifeDays(final Integer numberOfDays) {
 		if (numberOfDays == null) {
 			throw new IllegalArgumentException(Error.PRODUCT_SHELF_LIFE_NULL.toString());
@@ -91,6 +121,13 @@ public class Product implements Serializable {
 		return this.department;
 	}
 
+	/**
+	 * Sets the product department. Throws an <code>IllegalArgumentException</code>
+	 * if the department is null; blank; empty; or contains characters other than
+	 * letters and spaces.
+	 * 
+	 * @param department the product's department
+	 */
 	public void setDepartment(final String department) {
 		if (StringUtils.isBlank(department)) {
 			throw new IllegalArgumentException(Error.PRODUCT_DEPARTMENT_NULL_BLANK_EMPTY.toString());
@@ -107,6 +144,12 @@ public class Product implements Serializable {
 		return this.price;
 	}
 
+	/**
+	 * Sets the product's price. Throw's an <code>IllegalArgumentException</code> if
+	 * the price is null or negative.
+	 * 
+	 * @param price the product's price
+	 */
 	public void setPrice(final BigDecimal price) {
 		if (price == null) {
 			throw new IllegalArgumentException(Error.PRODUCT_PRICE_NULL.toString());
@@ -123,6 +166,14 @@ public class Product implements Serializable {
 		return this.unit;
 	}
 
+	/**
+	 * Sets the product unit (e.g., "lb" to represent pounds or "Each" to represent
+	 * individual units). Throws an <code>IllegalArgumentException</code> if the
+	 * unit is null; blank; empty; or contains characters other than letters and
+	 * spaces.
+	 * 
+	 * @param unit the product's unit
+	 */
 	public void setUnit(final String unit) {
 		if (StringUtils.isBlank(unit)) {
 			throw new IllegalArgumentException(Error.PRODUCT_UNIT_NULL_BLANK_EMPTY.toString());
@@ -139,6 +190,12 @@ public class Product implements Serializable {
 		return this.xFor;
 	}
 
+	/**
+	 * Sets the product's xFor value. Throws an
+	 * <code>IllegalArgumentException</code> if the xFor is null, negative or zero.
+	 * 
+	 * @param xFor the product's xfor factor value
+	 */
 	public void setXFor(final Integer xFor) {
 		if (xFor == null) {
 			throw new IllegalArgumentException(Error.PRODUCT_XFOR_NULL.toString());
@@ -155,6 +212,12 @@ public class Product implements Serializable {
 		return this.cost;
 	}
 
+	/**
+	 * Sets the product's cost. Throws and <code>IllegalArgumentException</code> if
+	 * the cost is null or negative.
+	 * 
+	 * @param cost the product's cost
+	 */
 	public void setCost(final BigDecimal cost) {
 		if (cost == null) {
 			throw new IllegalArgumentException(Error.PRODUCT_COST_NULL.toString());

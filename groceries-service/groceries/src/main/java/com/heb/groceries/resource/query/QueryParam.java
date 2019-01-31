@@ -3,6 +3,9 @@ package com.heb.groceries.resource.query;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents the set of query parameters supported by the service.
+ */
 public enum QueryParam {
 	ID("id"),
 	DESCRIPTION("descriptionContains"),

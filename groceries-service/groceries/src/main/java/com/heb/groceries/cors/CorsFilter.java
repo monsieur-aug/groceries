@@ -7,6 +7,11 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
 
+/**
+ * Configures cross-origin resource sharing (CORS) settings for the service. In
+ * particular, the <code>Access-Control-Allow-Origin</code> property specifies
+ * which domain, protocol, and port have permission to access the service.
+ */
 @Provider
 public class CorsFilter implements ContainerResponseFilter {
 

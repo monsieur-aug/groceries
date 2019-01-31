@@ -8,6 +8,14 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.heb.groceries.dao.exception.DAOConfigurationException;
 
+/**
+ * A factory for data access objects (DAOs). This class provides DAOs based on
+ * the properties retrieved from the properties file. The properties are
+ * retrieved according to the specified dbName, which is used as a prefix for
+ * each property key.
+ * 
+ * @see com.heb.groceries.dao.DAOProperties
+ */
 public abstract class DAOFactory {
 
 	private static final String	PROPERTY_URL		= "url";
@@ -43,13 +51,23 @@ public abstract class DAOFactory {
 		return newInstance;
 	}
 
+	/**
+	 * @return a connection to the database
+	 * @throws SQLException if a database connection error occurs
+	 */
 	abstract Connection getConnection() throws SQLException;
 
 	public ProductDAO getProductDAO() {
 		return new ProductDAOJDBC(this);
 	}
+
+	// Other DAOs may be specified here similar to the one above
 }
 
+/**
+ * Provides a connection to the database using the supplied URL, username, and
+ * password.
+ */
 class DriverManagerDAOFactory extends DAOFactory {
 	private String	url;
 	private String	username;
